@@ -1,0 +1,126 @@
+body {
+    background-image: url(img/background.png);
+    margin: 0px;
+    padding: 0px;
+    font-size: 8pt;
+    font-family: Verdana, Tahoma, sans-serif;
+}
+h1 {
+    text-align: center;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 24pt;
+}
+
+#banner {
+    background-image: url(img/bannerbackground.png);
+    background-repeat: repeat-x;
+    text-align: center;
+    margin-left: auto;
+    margin-top: auto;
+}
+
+#content {
+    position: relative;
+    width: 800px;
+    border: 4px gray solid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+}
+
+#review {
+    width: 550px;
+    position: absolute;
+    left: 0px;
+}
+.para {
+    float: left;
+    width: 47%;
+    margin-left: 2%;
+}
+
+.comment {
+    background-color: #E1D697;
+    border: 2px gray solid;
+    padding: 8px;
+    overflow: hidden;
+}
+.comment > img {
+    float: left;
+    clear: both;
+    padding-right: 5px;
+}
+.comment > q {
+    font-weight: bold;
+}
+.author {
+    vertical-align: top;
+    margin-bottom: 3em;
+}
+.author > img {
+    margin-right: 5px;
+    float: left;
+}
+.author > span {
+    font-style: italic;
+    vertical-align: top;
+    margin-bottom: 3em;
+}
+
+#rotten {
+    height: 83px;
+    color: white;
+    position: relative;
+    width: 550px;
+    background-image: url(img/rottenbackground.png);
+    top: 0px;
+}
+#rotten img {
+    height: 83px;
+}
+#rotten span {
+    /*vertical-align: top;*/
+    position: relative;
+    bottom: 12px;
+}
+span > span {
+    position: relative;
+    top: 0px;
+    font-size: 48pt;
+    font-weight: bold;
+    color: red;
+}
+
+#overview {
+    width: 250px;
+    float: right;
+    /*position: absolute;
+    right: 0px;*/
+    background-color: #A2B964;
+    font-family: Arial, sans-serif;
+}
+dl {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+dt {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+#footer {
+    /*width: 790px;
+    position: relative;
+    right: 0px;*/
+    clear:both;
+    padding: 5px;
+    margin-bottom: 0px;
+    text-align: center;
+    background-color: #A2B964;
+}
+#w3c {
+    /*float: right;*/
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+}
