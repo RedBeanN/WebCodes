@@ -1,0 +1,247 @@
+li {
+    list-style-type: none;
+    text-align: center;
+}
+body {
+    height: 100%;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+#at-plus-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+#bottom-positioner {
+    position: absolute;
+    width: 100%;
+    bottom: 105px;
+    text-align: center;
+}
+
+#button {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    left: 50%;
+    background: url(assets/images/atplus_white.png) center no-repeat #9a9ece;
+    background-size: 20px 14px;
+    border-radius: 50%;
+    transition-delay: 0.75s;
+    transition-duration: 0.3s;
+}
+
+#button:hover {
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    margin-top: -12px;
+    background: url(assets/images/atplus_green.png) center no-repeat rgba(48, 63, 159, 1);
+    background-size: 36px, 26px;
+    transition-delay: 0.1s;
+    transition-duration: 0.5s;
+}
+
+.info {
+    position: absolute;
+    overflow: hidden;
+    opacity: 1;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    left: 50%;
+    bottom: -12px;
+    border-radius: 50%;
+    background-color: #7e7e7e;
+    z-index: -1;
+    transition-delay: 0.3s;
+    transition-duration: 0.5s;
+}
+
+.button {
+    position: absolute;
+    opacity: 0;
+    left: -16px;
+    top: -16px;
+    width: 32px;
+    height: 32px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: #686868;
+    border-radius: 50%;
+    z-index: 1;
+    transition-delay: 0.3s;
+    transition-duration: 0.5s;
+}
+
+#button:hover .button { 
+    transition-delay: 0.1s;
+}
+
+#button:hover .info {
+    opacity: 1;
+    width: 128px;
+    height: 128px;
+    margin-left: -64px;
+    margin-top: -64px;
+    left: 50%;
+    bottom: 32px;
+    z-index: 1;
+    transition-delay: 0.1s;
+    transition-duration: 0.5s;
+}
+
+#info-bar {
+    position: absolute;
+    width: 100%;
+    margin-left: -50%;
+    left: 50%;
+    height: 10px;
+    bottom: 50%;
+}
+
+#button:hover #info-bar {
+    height: 90px;
+}
+
+#control-ring {
+    position: absolute;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 24px;
+    height: 24px;
+    left: 50%;
+    top: 50%;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    left: -3px;
+    top: 8px;
+}
+
+.page span {
+    vertical-align: top;
+    margin-left: 12px;
+}
+
+.user { font-size: 16px; }
+
+.user > img {
+    width: 21px;
+    height: 21px;
+}
+
+.comment {
+    top: 42px;
+    left: -9px;
+    font-size: 32px;
+}
+
+.comment > img {
+    width: 27px;
+    height: 26px;
+}
+
+.mine {
+    position: relative;
+    top: 68px;
+}
+
+.mine > span {
+    vertical-align: top;
+    margin-left: 6px;
+    color: #2fd28f;
+    font-size: 18px;
+}
+
+.posted { right:46px; }
+
+.like {
+    top: 41px;
+    left: 5px;
+}
+
+#button:hover .button { opacity: 1; }
+
+#button:hover .mask {
+    background: url(assets/images/mask.png) center no-repeat #686868;
+    background-size: 15px, 18px;
+    left: -79px;
+    top: -51px;
+}
+
+#button:hover .history {
+    background: url(assets/images/history.png) center no-repeat #686868;
+    background-size: 15px, 18px;
+    left: -89px;
+    top: -14px;
+}
+
+#button:hover .message {
+    background: url(assets/images/message.png) center no-repeat #686868;
+    background-size: 15px, 18px;
+    left: -75px;
+    top: 24px;
+}
+
+#button:hover .setting {
+    background: url(assets/images/setting.png) center no-repeat #686868;
+    background-size: 15px, 18px;
+    left: -42px;
+    top: 45px;
+}
+
+#button:hover .sign {
+    background: url(assets/images/signin.png) center no-repeat #686868;
+    background-size: 15px, 18px;
+    left: 2px;
+    top: 42px;
+}
+
+#button:hover .unread {
+    opacity: 1;
+    transition-delay: 0.1s;
+    transition-duration: 0.5s;
+}
+
+.unread {
+    opacity: 0;
+    position: absolute;
+    left: 21px;
+    top: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    line-height: 18px;
+    font-size: 12px;
+    background-color: red;
+    transition-duration: 0.1s;
+}
+
+#button:hover .button { background-color: #686868; }
+
+
+/*碰撞体积*/
+.apb {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 10px;
+    top: 10px;
+}
+#button:hover .apb {
+    width: 126px;
+    height: 131px;
+    left: -64px;
+    top: -28px;
+    border-radius: 29px 0px 30px 73px;
+    z-index: 0;
+}
