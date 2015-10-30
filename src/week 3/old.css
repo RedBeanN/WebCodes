@@ -9,6 +9,21 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#button {
+    transition-delay: 0.75s;
+    transition-duration: 0.3s;
+}
+
+#button:hover, #button:hover .info, #button:hover .button {
+    transition-delay: 0.1s;
+    transition-duration: 0.5s;
+}
+
+.info, .button {
+    transition-delay: 0.3s;
+    transition-duration: 0.5s;
+}
+
 #at-plus-container {
     width: 100%;
     height: 100%;
@@ -32,19 +47,16 @@ body {
     background: url(assets/images/atplus_white.png) center no-repeat #9a9ece;
     background-size: 20px 14px;
     border-radius: 50%;
-    transition-delay: 0.75s;
-    transition-duration: 0.3s;
 }
 
 #button:hover {
-    width: 50px;
+    transform: scale(5);
+    /*width: 50px;
     height: 50px;
     margin-left: -25px;
-    margin-top: -12px;
+    margin-top: -12px;*/
     background: url(assets/images/atplus_green.png) center no-repeat rgba(48, 63, 159, 1);
     background-size: 36px, 26px;
-    transition-delay: 0.1s;
-    transition-duration: 0.5s;
 }
 
 .info {
@@ -59,8 +71,6 @@ body {
     border-radius: 50%;
     background-color: #7e7e7e;
     z-index: -1;
-    transition-delay: 0.3s;
-    transition-duration: 0.5s;
 }
 
 .button {
@@ -75,25 +85,17 @@ body {
     background-color: #686868;
     border-radius: 50%;
     z-index: 1;
-    transition-delay: 0.3s;
-    transition-duration: 0.5s;
-}
-
-#button:hover .button { 
-    transition-delay: 0.1s;
 }
 
 #button:hover .info {
     opacity: 1;
-    width: 128px;
-    height: 128px;
-    margin-left: -64px;
-    margin-top: -64px;
+    width: 130px;
+    height: 130px;
+    margin-left: -65px;
+    margin-top: -65px;
     left: 50%;
     bottom: 32px;
     z-index: 1;
-    transition-delay: 0.1s;
-    transition-duration: 0.5s;
 }
 
 #info-bar {
@@ -169,7 +171,10 @@ body {
     left: 5px;
 }
 
-#button:hover .button { opacity: 1; }
+#button:hover .button {
+    opacity: 1;
+    background-color: #686868;
+}
 
 #button:hover .mask {
     background: url(assets/images/mask.png) center no-repeat #686868;
@@ -226,7 +231,6 @@ body {
     transition-duration: 0.1s;
 }
 
-#button:hover .button { background-color: #686868; }
 
 
 /*碰撞体积*/
