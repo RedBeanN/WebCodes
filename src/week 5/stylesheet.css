@@ -39,7 +39,7 @@ button {
     border: 1px solid #78797a;
     color: black;
     font-size: 35px;
-    transition-duration: 0.2s;
+    transition-duration: 0.1s;
 }
 
 button:hover {
