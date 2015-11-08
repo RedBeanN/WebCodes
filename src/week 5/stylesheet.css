@@ -1,0 +1,60 @@
+#positioner {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: #dddddd;
+}
+
+#data_bar {
+    background-color: #202020;
+    border: 1px solid #78797a;
+    border-bottom: none;
+    width: 358px;
+    height: 100px;
+    padding-right: 20px;
+    padding-left: 20px;
+    color: white;
+    font-size: 50px;
+    text-align: right;
+}
+
+#input_bar {
+    background-color: #202020;
+    border: 1px solid #78797a;
+    border-top: none;
+    border-bottom: none;
+    width: 358px;
+    height: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+    color: gray;
+    font-size: 20px;
+    text-align: right;
+}
+button {
+    width: 100px;
+    height: 80px;
+    background-color: #d1d2d5;
+    border: 1px solid #78797a;
+    color: black;
+    font-size: 35px;
+    transition-duration: 0.2s;
+}
+
+button:hover {
+    background-color: #b9babd;
+}
+button:active {
+    background-color: #878986;
+}
+
+#equal, #plus, #minus, #multiply, #divide {
+    background-color: #f99112;
+}
+#equal:hover, #plus:hover, #minus:hover, #multiply:hover, #divide:hover {
+    background-color: #e5752d;
+}
+#equal:active, #plus:active, #minus:active, #multiply:active, #divide:active {
+    background-color: #d15933;
+}
