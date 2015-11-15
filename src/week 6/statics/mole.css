@@ -1,0 +1,106 @@
+body {
+    text-align: center;
+    font-family: Arial;
+}
+h1 {
+    font-weight: normal;
+    margin-top: 100px;
+}
+body > p {
+    font-size: 20px;
+}
+input {
+    background-color: white;
+    border: 1px solid #dddddd;
+    font-size: 18px;
+}
+button {
+    outline: none;
+}
+
+#game-area {
+    position: relative;
+    width: 350px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#game-area > div {
+    position: absolute;
+}
+#buttons {
+    border: 1px solid #bbbbbb;
+    border-radius: 2px;
+}
+#buttons button {
+    border: none;
+    background-color: white;
+}
+#buttons button:active {
+    border: none;
+    background-color: #dddddd;
+}
+
+#status {
+    top: 30px;
+}
+#status input {
+    width: 170px;
+}
+#counter {
+    right: 0px;
+    text-align: right;
+}
+#counter p, #counter input {
+    display: inline;
+    line-height: 25px;
+}
+#counter input {
+    width: 40px;
+    height: 20px;
+}
+#game {
+    width: 260px;
+    left: 50px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    bottom: 0px;
+}
+.mole {
+    width: 15px;
+    height: 15px;
+    margin: 3px;
+    margin-top: 5px;
+    background-color: white;
+    border: 2px solid #bbbbbb;
+    border-bottom: 2px solid #aaaaaa;
+    border-right: 2px solid #aaaaaa;
+    border-radius: 50%;
+}
+#intro {
+    width: 650px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: cursive;
+    font-weight: bold;
+    padding-top: 10px;
+    line-height: 20px;
+}
+#intro p {
+    margin-left: 20px;
+    line-height: 5px;
+    font-weight: normal;
+}
+
+.target {
+    width: 15px;
+    height: 15px;
+    margin: 3px;
+    margin-top: 5px;
+    background-color: #ddddff;
+    border: 2px solid #6666ff;
+    border-radius: 50%;
+}
