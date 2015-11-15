@@ -16,8 +16,10 @@ input {
 }
 button {
     outline: none;
+    /* 去除按钮边框 */
 }
 
+/* 游戏区域 */
 #game-area {
     position: relative;
     width: 350px;
@@ -28,6 +30,8 @@ button {
 #game-area > div {
     position: absolute;
 }
+
+/* 开始和结束汗牛 */
 #buttons {
     border: 1px solid #bbbbbb;
     border-radius: 2px;
@@ -41,6 +45,7 @@ button {
     background-color: #dddddd;
 }
 
+/* 游戏状态和时间分数 */
 #status {
     top: 30px;
 }
@@ -59,6 +64,8 @@ button {
     width: 40px;
     height: 20px;
 }
+
+/* 地鼠出现的区域 */
 #game {
     width: 260px;
     left: 50px;
@@ -68,6 +75,8 @@ button {
     border-bottom: 1px solid black;
     bottom: 0px;
 }
+
+/* 所有mole */
 .mole {
     width: 15px;
     height: 15px;
@@ -79,6 +88,8 @@ button {
     border-right: 2px solid #aaaaaa;
     border-radius: 50%;
 }
+
+/* 底部规则介绍 */
 #intro {
     width: 650px;
     text-align: left;
@@ -95,6 +106,7 @@ button {
     font-weight: normal;
 }
 
+/* 指定的地鼠 */
 .target {
     width: 15px;
     height: 15px;
