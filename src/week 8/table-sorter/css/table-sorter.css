@@ -1,0 +1,27 @@
+th, td {
+    width: 200px;
+}
+th {
+    background-color: #031b7f;
+    color: white;
+}
+.sorted {
+    background-color: #a6affc;
+}
+.sorted-asc {
+    background-image: url("../img/ascend.png");
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.sorted-desc {
+    background-image: url("../img/descend.png");
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.odd {
+    background-color: white;
+}
+.even {
+    background-color: #dddddd;
+}

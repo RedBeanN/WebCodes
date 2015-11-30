@@ -1,0 +1,132 @@
+body, input {
+    text-align: center;
+}
+button {
+    outline: none;
+    transition-duration: 0.2s;
+}
+button:hover {
+    transform: scale(1.05, 1.05);
+}
+button:active {
+    transform: scale(0.95, 0.95);
+}
+
+#container {
+    width: 640px;
+    height: 320px;
+    border: 2px solid #dddddd;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#left-bar, #right-bar {
+    width: 120px;
+    height: 280px;
+    border: 1px solid #cccccc;
+    margin-top: 10px;
+}
+
+#left-bar {
+    float: left;
+    margin-left: 30px;
+}
+#left-bar p {
+    font-size: 13px;
+    margin-top: 40px;
+}
+#upload, #change {
+    transform: none;
+}
+#web-route {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+#right-bar {
+    float: right;
+    margin-right: 30px;
+    padding-top: 20px;
+}
+#preview {
+    width: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dddddd;
+}
+#pic {
+    width: 80px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: 80px 80px;
+    transition-duration: 0.1s;
+}
+#step {
+    margin-top: 50px;
+}
+#timer {
+    margin-top: 20px;
+}
+#step-bar, #time-bar {
+    display: inline;
+    width: 60px;
+}
+
+#puzzle-container {
+    width: 250px;
+    border: 2px solid #aaaaaa;
+    padding: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+#puzzle-container button, #p1 {
+    width: 60px;
+    height: 60px;
+    margin: 1px;
+    border: 1px dotted gray;
+    background: none;
+    background-size: 240px 240px;
+}
+
+#puzzle-container #p2, #puzzle-container #p6, #puzzle-container #p10, #puzzle-container #p14 {
+    background-position-x: -60px;
+}
+#puzzle-container #p3, #puzzle-container #p7, #puzzle-container #p11, #puzzle-container #p15 {
+    background-position-x: -120px;
+}
+#puzzle-container #p4, #puzzle-container #p8, #puzzle-container #p12 {
+    background-position-x: -180px;
+}
+#puzzle-container #p5, #puzzle-container #p6, #puzzle-container #p7, #puzzle-container #p8 {
+    background-position-y: -60px;
+}
+#puzzle-container #p9, #puzzle-container #p10, #puzzle-container #p11, #puzzle-container #p12 {
+    background-position-y: -120px;
+}
+#puzzle-container #p13, #puzzle-container #p14, #puzzle-container #p15 {
+    background-position-y: -180px;
+}
+#puzzle-container #p16 {
+    background-image: none;
+    border: 1px solid white;
+}
+
+#replay {
+    margin-top: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 4px 4px 7px gray;
+    background-image: none;
+    background-color: #9999ff;
+    color: white;
+    font-family: "Microsoft YaHei";
+    font-size: 24px;
+    width: 140px;
+    height: 50px;
+}
+#replay:active {
+    transform: scale(0.9, 0.9);
+}
