@@ -1,0 +1,16 @@
+{
+  "name": "async-calculator",
+  "version": "1.0.0",
+  "description": "An asynchronous Sum Calculator",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "shnhong@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "mime": "^1.3.4"
+  }
+}

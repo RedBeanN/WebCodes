@@ -1,0 +1,202 @@
+/*大布局定位*/
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+}
+
+#at-plus-container {
+  position: relative;
+  width: 180px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#bottom-positioner {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/*细节*/
+#info-bar {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  bottom: 97px;
+  left: 77px;
+  border-radius: 50%;
+  background-color: #7E7E7E;
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+#button:hover #info-bar {
+  width: 130px;
+  height: 130px;
+  bottom: 150px;
+  left: 25px;
+  border-radius: 50%;
+  background-color: #7E7E7E;
+  opacity: 1;
+}
+
+#info-bar ul{
+  margin: 0px;
+  padding: 0px;
+}
+
+#info-bar li {
+  list-style: none;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  margin-left: 0;
+  color: white;
+}
+
+#control-ring-container {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  bottom: 20px;
+  left: 0px;
+  border-radius: 50%;  
+}
+
+.button {
+  list-style: none;
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-top: 60px;
+  margin-left: 35px;
+  border-radius: 50%;
+  background-color: #303F9F;
+  text-align: center;
+  font-size: 24px;
+  color: lightgray;
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+#button:hover #control-ring li {
+  opacity: 1;
+}
+
+#button:hover #control-ring li:nth-child(1) {
+  margin-top: 20px;
+  margin-left: -30px;
+}
+
+#button:hover #control-ring li:nth-child(2) {
+  margin-top: 60px;
+  margin-left: -40px;
+}
+
+#button:hover #control-ring li:nth-child(3) {
+  margin-top: 102px;
+  margin-left: -26px;
+}
+
+#button:hover #control-ring li:nth-child(4) {
+  margin-top: 129px;
+  margin-left: 12px;
+}
+
+#button:hover #control-ring li:nth-child(5) {
+  margin-top: 128px;
+  margin-left: 60px;
+}
+
+#control-ring li span.val, button span.val {
+  position: absolute;
+  top: -2px;
+  right: -10px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+  color: #E0D6DC;
+  padding-top: 2px ;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+
+#button {
+  width: 70px;
+  height: 70px;
+  margin: 75px 55px;
+}
+
+#button .apb {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  bottom: 97px;
+  left: 77px;
+  border-radius: 50%;  
+  background: url('images/atplus_white.png') center no-repeat;
+  background-size: 20px 15px;
+  background-color: #989FCF;
+  transition: all 0.5s;
+  transition-delay: 0.5s;
+}
+
+#button:hover .apb {
+  width: 50px;
+  height: 50px;
+  bottom: 85px;
+  left: 65px;
+  background: url('images/atplus_green.png') center no-repeat;
+  background-size: 40px 30px;
+  background-color: #303F9F;
+  transition-delay: 0s;
+}
+
+.disabled {
+    background-color: gray;
+}
+
+.button:active, .apb:active {
+    transform: scale(0.7);
+}
+
+#tips {
+    /*border: 1px solid black;*/
+    width: 240px;
+    height: 20px;
+    font-size: 12px;
+    color: black;
+    position: relative;
+    left: -30px;
+    top: -60px;
+    transition-delay: all 0.5s;
+}
+
+#sum {
+    /*border: 1px solid white;*/
+    width: 60px;
+    height: 40px;
+    font-size: 36px;
+    margin-top: 40px;
+    color: #28e6a0;
+}
+
+#tips, #sum {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    transition-duration: 0.5s;
+}
+.icon {
+    width: 100%;
+    height: 100%;
+}
