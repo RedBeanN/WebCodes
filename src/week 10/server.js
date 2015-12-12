@@ -11,7 +11,6 @@ var port = 8000,
 http.createServer(function (req, res) {
   var requrl = url.parse(req.url).pathname;
   if (requrl.indexOf('random') != -1) {
-    console.log(requrl);
     res.writeHead(200, {'Content-Type': 'text/plain'});
     setTimeout(function() {
       var n = _.random(9);
@@ -36,3 +35,4 @@ http.createServer(function (req, res) {
 }).listen(port);
 console.log('Server running at http://localhost: ', port);
 console.log('mime test: "host/S1"\n' + mime.lookup('host/S1'));
+console.log('mime test: "host/a.p12"\n' + mime.lookup('host/a.p12'));
