@@ -39,18 +39,13 @@ $(function() {
       }
     }
   function handler(event, pre) {
-    console.log(this.className + ' was clicked');
     var cl = this.className[0];
     if (!buttons.find('.' + cl).html()) {
-      //$('.button').unbind('click').removeClass('clickable');
       $($('.' + cl + ' .val')[0])[0].innerHTML = '···';
       $('.' + cl + ' .val').fadeIn(500);
       $.get('/random/' + cl, function(data, status) {
-        console.log('[GET-random number]\n  status: ' + status);
-        console.log('  data: ' + data)
         if (status == 'success') {
           pre[cl]=1;
-          console.log(pre);
           $($('.' + cl + ' .val')[0])[0].innerHTML = data;
           $('.' + cl + ' .val').fadeIn(300);
           $('.apb').trigger('click');
@@ -60,7 +55,6 @@ $(function() {
           }
           if (pre['A'] && pre['B'] && pre['C'] && pre['D'] && pre['E']) {
             $('#info-bar').trigger('click');
-            console.log('Info clicked');
           }
         }
       });

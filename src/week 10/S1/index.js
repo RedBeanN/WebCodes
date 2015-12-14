@@ -39,15 +39,12 @@ $(function() {
       }
     }
   function handler() {
-    console.log(this.className + ' was clicked');
     var cl = this.className[0];
     if (!buttons.find('.' + cl).html()) {
       $('.button').unbind('click').removeClass('clickable');
       $($('.' + cl + ' .val')[0])[0].innerHTML = '···';
       $('.' + cl + ' .val').fadeIn(500);
       $.get('/random/' + cl, function(data, status) {
-        console.log('[GET-random number]\n  status: ' + status);
-        console.log('  data: ' + data)
         if (status == 'success') {
           $($('.' + cl + ' .val')[0])[0].innerHTML = data;
           $('.' + cl + ' .val').fadeIn(300);
