@@ -1,5 +1,5 @@
 var arr=[];
-var flag = 0, steps = 0;
+var flag = 0, steps = 0, timer, timeCtr;
 window.onload = function() {
     arr = findButton();
     document.getElementById("step-bar").value = 0;
@@ -7,6 +7,7 @@ window.onload = function() {
     document.getElementById("change").onclick = randomPic;
     document.getElementById("upload").onclick = uploadPic;
     document.getElementById("pic").onerror = resetPic;
+    document.getElementById("time-bar").value = 0;
     backgoundChange("url(statics/default.jpg)");
     var a = document.getElementById("puzzle-container");
     for (var i = 0; i < 16; i++) {
@@ -43,6 +44,9 @@ function reset() {
     steps = 0;
     document.getElementById("step-bar").value = steps;
     document.getElementById("replay").innerText = "重新开始";
+    document.getElementById("time-bar").value = 0;
+    timeCtr = 0;
+    setTimer();
 }
 
 function move() {
@@ -78,7 +82,8 @@ function check() {
         }
     }
     if (ctr === 16) {
-        alert("还原成功！你用了" + steps + "步完成拼图！");
+        alert("还原成功！你在" + timeCtr + "秒内用" + steps + "步完成了拼图！");
+        clearInterval(timer);
         flag = 0;
     }
 }
@@ -121,4 +126,14 @@ function backgoundChange(route) {
             foo.children[i].style.backgroundImage = route;
         }
     }
+}
+
+function setTimer() {
+    clearInterval(timer);
+    timer = window.setInterval(onTime, 1000);
+}
+
+function onTime() {
+    timeCtr++;
+    document.getElementById("time-bar").value = timeCtr;
 }

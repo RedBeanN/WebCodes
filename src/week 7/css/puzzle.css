@@ -65,7 +65,10 @@ button:active {
 #step {
     margin-top: 50px;
 }
-#step-bar {
+#timer {
+    margin-top: 20px;
+}
+#step-bar, #time-bar {
     display: inline;
     width: 60px;
 }

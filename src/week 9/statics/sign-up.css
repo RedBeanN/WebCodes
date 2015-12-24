@@ -58,8 +58,13 @@ input {
 }
 .info {
 	text-align: left;
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 20px;
+}
+.info span {
+	margin-left: 10px;
+}
+.detail {
+	padding-bottom: 20px;
 }
 .err-input {
 	color: red;

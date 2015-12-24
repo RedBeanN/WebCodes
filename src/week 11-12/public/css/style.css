@@ -1,0 +1,119 @@
+/*Stylesheet*/
+/*css*/
+body, div, input, button {
+  text-align: center;
+  font-family: Arial, "Microsoft YaHei";
+  font-weight: bold;
+  /*border: 1px solid blue;*/
+}
+form {
+  text-align: right;
+}
+input {
+  text-align: left;
+  width: 220px;
+  height: 24px;
+  border: none;
+  margin-right: 20px;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sign-in {
+  width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #cccccc;
+  box-shadow: 3px 3px 5px gray;
+}
+#title {
+  background-color: #bbbbff;
+  color: white;
+  font-size: 36px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: 48px;
+}
+#reset, #submit {
+  text-align: center;
+  width: 50%;
+  margin: 0px;
+  height: 48px;
+  font-size: 24px;
+  background-color: #aaaaff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+#reset {
+  border-right: 1px solid white;
+}
+#reset:hover, #submit:hover {
+  background-color: #66ccff;
+}
+
+#userinfo {
+  height: 160px;
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.info {
+  text-align: left;
+  margin-left: 40px;
+}
+.info span {
+  margin-left: 10px;
+}
+.err-input {
+  opacity: 0;
+  color: red;
+  font-size: 12px;
+  font-weight: normal;
+  text-align: right;
+  width: 310px;
+  margin-left: 15px;
+  margin-top: -5px;
+  margin-bottom: 0px;
+  height: 20px;
+  transition-duration: 0.5s;
+}
+
+#log-out {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin: 0px;
+  height: 48px;
+  font-size: 24px;
+  background-color: #aaaaff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+#log-out:hover {
+  background-color: #66ccff;
+}
+
+#index-container {
+  width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 120px;
+}
+#index-container a {
+  display: inline-block;
+  text-decoration: none;
+  width: 100px;
+  padding: 20px;
+  margin: 20px;
+  background-color: #66aaff;
+  color: white;
+  font-size: 24px;
+}
+#index-container a:hover {
+  background-color: #66ccff;
+}

@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title 详情
+    link(rel='stylesheet' href='public/css/style.css')
+    script(type='text/javascript' src='public/js/jquery.js')
+    script(type='text/javascript' src='public/js/detail.js')
+
+  body
+    div#sign-in
+      h1#title 用户详情
+
+      p.info 用户名 
+        span #{username}
+
+      p.info 学　号 
+        span #{number}
+
+      p.info 电　话 
+        span #{phone}
+
+      p.info 邮　箱 
+        span #{email}
+
+      a#log-out(href='../delete-cookies') 退出
+ 
