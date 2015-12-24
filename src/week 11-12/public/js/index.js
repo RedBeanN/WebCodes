@@ -1,9 +1,9 @@
 $(function() {
+  changeErr('all', 0);
   $('input:not(.button)').blur(function() {
     var self = this;
     check(self);
   });
-  changeErr('all', 0);
   $('input.button').click(function(){
     $('input:not(.button)').blur();
     if (!validator.isFormValid() && this.type == 'submit') return false;

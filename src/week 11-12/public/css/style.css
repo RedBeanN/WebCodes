@@ -117,3 +117,19 @@ input {
 #index-container a:hover {
   background-color: #66ccff;
 }
+
+#error-container {
+  width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: normal;
+  color: red;
+}
+#err-msg {
+  color: red;
+  font-size: 12px;
+  font-weight: normal;
+  text-align: center;
+  width: 340px;
+  height: 20px;
+}

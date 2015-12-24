@@ -1,0 +1,37 @@
+doctype html
+html(lang='zh-cn')
+  head
+    meta(charset='UTF-8')
+    title 注册
+    link(rel='stylesheet', type='text/css', href='public/css/style.css')
+    script(type='text/javascript', src='public/js/jquery.js')
+    script(type='text/javascript', src='public/js/validator.js')
+    script(type='text/javascript', src='public/js/index.js')
+
+  body
+    if error
+      div#error-container!= error
+
+    #sign-in
+      p#title 注册
+      form(action='/regist', method='POST')
+        | 用户名
+        input#username(type='text', name='username', value=user.username)
+        p#err-username.err-input
+        | 密码
+        input#password(type='password', name='password')
+        p#err-password.err-input
+        | 重复密码
+        input#repeat(type='password', name='repeat')
+        p#err-repeat.err-input
+        | 学号
+        input#number(type='text', name='number', value=user.number)
+        p#err-number.err-input
+        | 电话
+        input#phone(type='text', name='phone', value=user.phone)
+        p#err-phone.err-input
+        | 邮箱
+        input#email(type='text', name='email', value=user.email)
+        p#err-email.err-input 邮箱格式为example@abc.xyz
+        input#reset.button(type='reset', value='重置')
+        input#submit.button(type='submit', value='提交')

@@ -1,0 +1,21 @@
+doctype html
+html(lang='zh-cn')
+  head
+    meta(charset='UTF-8')
+    title 登录
+    link(rel='stylesheet', type='text/css', href='public/css/style.css')
+
+  body
+    #sign-in
+      p#title 登录
+      form(action='/login', method='POST')
+        if error
+          p#err-msg!= error
+        | 用户名
+        input#username(type='text', name='username', value=user.username)
+        br
+        | 密码
+        input#password(type='password', name='password')
+        p
+        input#reset.button(type='reset', value='重置')
+        input#submit.button(type='submit', value='提交')
