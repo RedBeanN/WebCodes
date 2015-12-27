@@ -20,7 +20,7 @@ function changeErr(tg, op, errMsg) {
     case 'number' : tar = '#err-number'; break;
     case 'phone' : tar = '#err-phone'; break;
     case 'email' : tar = '#err-email'; break;
-    default : tar = '.err-input';
+    default : tar = '.err-input'; // default usually means 'all'
   }
   if (tar != '.err-input') $(tar).html(errMsg);
   $(tar).css('opacity', op);

@@ -6,7 +6,7 @@ var validator = {
     }, 
     password: {
       status: false,
-      errorMessage: '6~18位英文字母、数字或下划线，必须以英文字母开头'
+      errorMessage: '6~12位数字、大小写字母、中划线、下划线'
     }, 
     repeat: {
       status: false,
@@ -27,11 +27,11 @@ var validator = {
   }, 
 
   isUsernameValid: function (username){
-    return this.form.username.status = /^[a-zA-Z][a-zA-Z0-9_]{6,18}$/.test(username);
+    return this.form.username.status = /^[a-zA-Z][a-zA-Z0-9_]{5,11}$/.test(username);
   },
 
   isPasswordValid: function (password){
-    return this.form.password.status = /^[a-zA-Z][a-zA-Z0-9_]{6,18}$/.test(password);
+    return this.form.password.status = /^[a-zA-Z0-9-_]{6,12}$/.test(password);
   },
 
   isRepeatValid: function (repeat, passwd){

@@ -2,15 +2,18 @@ var http = require('http'),
     url = require('url'),
     path = require('path'),
     fs = require('fs'),
+    mongodb = require('mongodb'),
+    MongoClient = require('mongodb').MongoClient,
     jade = require('jade'),
-    querystring = require('querystring'),
     express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     validator = require('./public/js/validator.js'),
-    port = 8000, cookieTime = 14400000;
+    port = 3000, cookieMaxAge = 14400000;
 
 var users = {};
+var db;
+
 // all environments
 var app = express();
 app.set('port', port);
@@ -41,7 +44,6 @@ app.get('/regist', function(req, res) {
   }
 });
 app.get('/delete-cookies', function(req, res) {
-  console.log('delete');
   res.clearCookie('username');
   res.redirect('/');
 });
@@ -58,7 +60,8 @@ app.post('/regist', function(req, res) {
     checkUser(user);
     users[user.username] = user;
     users[user.username].password = req.body.password;
-    res.cookie('username', req.body.username, {maxAge: cookieTime});
+    registUserToDB(users[user.username]);
+    res.cookie('username', req.body.username, {maxAge: cookieMaxAge});
     res.redirect('/detail');
   } catch(err) {
     res.render('regist.jade', {error: err.message, user: user});
@@ -68,7 +71,7 @@ app.post('/login', function(req, res) {
   try {
     if (!users[req.body.username]) throw new Error('Username error');
     authUser(req.body);
-    res.cookie('username', req.body.username, {maxAge: cookieTime});
+    res.cookie('username', req.body.username, {maxAge: cookieMaxAge});
     res.redirect('/detail');
   } catch(err) {
     console.log(err.message);
@@ -76,10 +79,25 @@ app.post('/login', function(req, res) {
   }
 });
 
-var server = http.createServer(app);
-server.listen(app.get('port'), function() {
-  console.log('Express server listening on port: ' + app.get('port'));
-})
+// connect to database
+MongoClient.connect("mongodb://localhost:27017/db", function(err, database) {
+  if (err) console.error("ERROR");
+  db = database;
+  db.collection('users').find().toArray(function(err,data) {
+    for (var key in data) {
+      if(data[key].username) users[data[key].username] = data[key];
+    }
+
+    // run server
+    var server = http.createServer(app);
+    server.listen(app.get('port'), function() {
+      console.log('Userlist:');
+      for (var key in users) console.log(key);
+      console.log('Express server listening on port: ' + app.get('port'));
+    });
+  });
+});
+
 
 // functions
 function parseUser(body) {
@@ -90,7 +108,7 @@ function checkUser(user) {
   var errMsg = [];
   for (var key in user) {
     if (!validator.isFieldValid(key, user[key])) errMsg.push(validator.form[key].errorMessage);
-    if (!validator.isAttrValueUnique(users, user, key)) errMsg.push(getUniqueMessage(key));
+    if (!validator.isAttrValueUnique(users, user, key)) errMsg.push(getUniqueErrorMessage(key));
   }
   if (errMsg.length > 0) throw new Error(errMsg.join('<br />'));
 }
@@ -99,7 +117,7 @@ function authUser(user) {
   if (user.password != users[user.username].password) throw new Error('Password error');
 }
 
-function getUniqueMessage(key) {
+function getUniqueErrorMessage(key) {
   var msg;
   switch(key) {
     case 'username': msg = '用户名'; break;
@@ -109,4 +127,9 @@ function getUniqueMessage(key) {
   }
   msg += '已被注册。';
   return msg;
+}
+
+function registUserToDB(user) {
+  db.collection('users').insert(user);
+  console.log('Registed a user:\n', user)
 }

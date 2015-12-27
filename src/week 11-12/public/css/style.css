@@ -1,13 +1,19 @@
 /*Stylesheet*/
 /*css*/
-body, div, input, button {
+body, div, input {
   text-align: center;
   font-family: Arial, "Microsoft YaHei";
   font-weight: bold;
   /*border: 1px solid blue;*/
 }
+input:hover, a:hover {
+  transition-duration: 0.2s;
+}
 form {
   text-align: right;
+}
+a {
+  text-decoration: none;
 }
 input {
   text-align: left;
@@ -30,11 +36,13 @@ input {
 }
 #title {
   background-color: #bbbbff;
+  line-height: 36px;
   color: white;
   font-size: 36px;
-  padding-top: 8px;
+  padding-top: 16px;
   padding-bottom: 8px;
   height: 48px;
+  margin-bottom: 20px;
 }
 #reset, #submit {
   text-align: center;
@@ -92,7 +100,7 @@ input {
   border: none;
   color: white;
   font-weight: bold;
-  cursor: pointer;
+  padding-top: 10px;
 }
 #log-out:hover {
   background-color: #66ccff;
@@ -132,4 +140,27 @@ input {
   text-align: center;
   width: 340px;
   height: 20px;
+}
+
+#btn-container {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+#btn-container a {
+  display: inline-block;
+  width: 50%;
+  color: #6666ff;
+}
+.homepage {
+  text-align: left;
+}
+.switch {
+  text-align: right;
+}
+#btn-container a:hover {
+  color: #0000ff;
+  transform: scale(1.1);
 }

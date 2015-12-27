@@ -34,4 +34,8 @@ html(lang='zh-cn')
         input#email(type='text', name='email', value=user.email)
         p#err-email.err-input 邮箱格式为example@abc.xyz
         input#reset.button(type='reset', value='重置')
-        input#submit.button(type='submit', value='提交')
+        input#submit.button(type='submit', value='注册')
+
+    div#btn-container
+      a.homepage(href='/') << 回到主页
+      a.switch(href='/login') 直接登录 >>
