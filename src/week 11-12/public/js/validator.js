@@ -50,8 +50,9 @@ var validator = {
     return this.form.email.status = /^[a-zA-Z_\-]+@([a-zA-Z_\-]+\.)+[a-zA-Z]{2,4}$/.test(email);
   },
 
-  isFieldValid: function(fieldname, value){
+  isFieldValid: function(fieldname, value, value2){
     var CapFiledname = fieldname[0].toUpperCase() + fieldname.slice(1, fieldname.length);
+    if (fieldname == 'repeat') return this['isRepeatValid'](value, value2);
     return this["is" + CapFiledname + 'Valid'](value);
   },
 

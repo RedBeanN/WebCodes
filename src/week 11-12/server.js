@@ -9,7 +9,7 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     validator = require('./public/js/validator.js'),
-    port = 3000, cookieMaxAge = 14400000;
+    port = 3000, cookieMaxAge = 1440000;
 
 var users = {};
 var db;
@@ -39,7 +39,6 @@ app.get('/regist', function(req, res) {
   if (req.cookies.username) {
     res.redirect(301, '/detail');
   } else {
-    //res.sendFile(__dirname + '/public/html/regist.html');
     res.render('regist.jade', {user: {}});
   }
 });
@@ -106,8 +105,9 @@ function parseUser(body) {
 
 function checkUser(user) {
   var errMsg = [];
+  var pw = user['password'];
   for (var key in user) {
-    if (!validator.isFieldValid(key, user[key])) errMsg.push(validator.form[key].errorMessage);
+    if (!validator.isFieldValid(key, user[key]), pw) errMsg.push(validator.form[key].errorMessage);
     if (!validator.isAttrValueUnique(users, user, key)) errMsg.push(getUniqueErrorMessage(key));
   }
   if (errMsg.length > 0) throw new Error(errMsg.join('<br />'));
