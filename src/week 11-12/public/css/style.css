@@ -20,6 +20,7 @@ input {
   width: 220px;
   height: 24px;
   border: none;
+  border-radius: 0;
   margin-right: 20px;
   margin-left: 5px;
   margin-bottom: 10px;
@@ -45,6 +46,7 @@ input {
   margin-bottom: 20px;
 }
 #reset, #submit {
+  border-radius: 0 0 0 0;
   text-align: center;
   width: 50%;
   margin: 0px;
@@ -151,13 +153,8 @@ input {
 
 #btn-container a {
   display: inline-block;
-  width: 50%;
+  width: 100%;
   color: #6666ff;
-}
-.homepage {
-  text-align: left;
-}
-.switch {
   text-align: right;
 }
 #btn-container a:hover {

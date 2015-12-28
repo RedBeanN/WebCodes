@@ -9,6 +9,8 @@ html
   body
     div#sign-in
       h1#title 用户详情
+      if error
+        div#error-container 只能查看自己的账户信息
 
       p.info 用户名 
         span #{user.username}

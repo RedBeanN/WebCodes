@@ -9,7 +9,10 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     validator = require('./public/js/validator.js'),
-    port = 3000, cookieMaxAge = 1440000;
+    bcrypt = require('bcryptjs'),
+    salt = bcrypt.genSaltSync(10),
+    cookieMaxAge = 24 * 60 * 60 * 1000,
+    port = 8000;
 
 var users = {};
 var db;
@@ -24,12 +27,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 
-// get functions
+// deal with gets
 app.get('/', function(req, res) {
   if (req.cookies.username) {
-    res.redirect(301, '/detail');
+    if (req.query.username) {
+      res.redirect('/detail?username=' + req.query.username);
+    }
+    else res.redirect(301, '/detail');
   } else {
-    res.sendFile(__dirname + '/public/html/index.html');
+    res.redirect('/login');
   }
 });
 app.get('/login', function(req, res) {
@@ -48,7 +54,12 @@ app.get('/delete-cookies', function(req, res) {
 });
 app.get('/detail', function(req, res) {
   if(users[req.cookies.username]) {
-    res.render('detail.jade', {user: users[req.cookies.username]});
+    if (req.query.username) {
+      if (req.query.username != req.cookies.username) {
+        res.render('detail.jade', {user: users[req.cookies.username], error: true});
+      }
+    }
+    else res.render('detail.jade', {user: users[req.cookies.username]});
   } else res.redirect(301, '/delete-cookies');
 });
 
@@ -58,7 +69,7 @@ app.post('/regist', function(req, res) {
     var user = parseUser(req.body);
     checkUser(user);
     users[user.username] = user;
-    users[user.username].password = req.body.password;
+    users[user.username].password = bcrypt.hashSync(req.body.password, salt);
     registUserToDB(users[user.username]);
     res.cookie('username', req.body.username, {maxAge: cookieMaxAge});
     res.redirect('/detail');
@@ -114,7 +125,7 @@ function checkUser(user) {
 }
 
 function authUser(user) {
-  if (user.password != users[user.username].password) throw new Error('Password error');
+  if (!bcrypt.compareSync(user.password, users[user.username].password)) throw new Error('Password error');
 }
 
 function getUniqueErrorMessage(key) {
