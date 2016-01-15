@@ -1,0 +1,11 @@
+a#back(href='/') 返回
+br
+h2 {{post.title}}
+div#para
+  p(ng-repeat='para in post.text') {{para}}
+p#blog-btn
+  | 删除操作是不可恢复的，您确定要继续吗？ 
+  br
+  button(ng-click='deletePost()') 确定
+  |  - 
+  button(ng-click='home()') 取消

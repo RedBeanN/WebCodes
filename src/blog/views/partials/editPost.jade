@@ -1,0 +1,10 @@
+h2
+  a#back(href='/') 返回
+  | 编辑文章
+div(ng-controller="mdCtrl")
+  input(placeholder='标题' ng-model='form.title', name='title')
+  br
+  textarea(placeholder='正文' ng-model='form.text' tab)
+  div(ng-bind-html="outputText" class="markdown")
+  p#blog-btn
+    button(ng-click='editPost()') 完成编辑

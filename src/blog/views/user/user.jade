@@ -1,0 +1,17 @@
+div#user-bar
+  form(ng-controller='clickCtrl')
+    button.login(ng-click='showLogin()') 登录
+    button.regist(ng-click='showRegist()') 注册
+    br
+    div#userpage
+      p#pagename {{pagename}}
+      div.inputs(ng-repeat='line in items.lines')
+        span {{line.title}}
+        input(ng-model='line.value' type='{{line.type}}' ng-focus='removeErr()' ng-blur='checkValidation()')
+        p.err-input(id='{{line.id}}')
+        br
+      div#data(ng-repeat='data in items.data')
+        p {{data.message}}
+      input.btns(ng-repeat='op in items.operations' type='{{op.type}}' value='{{op.value}}' ng-click='post(op.title)' id='{{op.id}}')
+      br
+      img#waiting(src='img/waiting.jpg' ng-show='items.waiting')

@@ -1,0 +1,11 @@
+h2
+  a#back(href='/') 返回
+  | 添加新内容
+div(ng-controller='mdCtrl')
+  input(placeholder='在此输入标题' ng-model='form.title', name='title')
+  | 　预览:
+  br
+  textarea(placeholder='在此输入正文' ng-model='form.text' tab)
+  div(ng-bind-html="outputText" class="markdown")
+  p#blog-btn
+    button(ng-click='submitPost()') Submit Post

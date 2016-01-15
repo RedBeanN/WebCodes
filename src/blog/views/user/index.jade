@@ -1,0 +1,20 @@
+div#sign-in
+  p#title 登录
+  form(method='POST')
+    if error
+      p#err-msg!= error
+    | 用户名
+    input#username(type='text', name='username', value='{{username}}')
+    br
+    | 密码
+    input#password(type='password', name='password')
+    p
+    input#reset.button(type='reset', value='重置')
+    input#submit.button(type='submit', value='登录')
+
+div#btn-container(ng-controller="CTRL")
+  a(href='/regist') 注册账号 >>
+  button(ng-click="RegistCtrl()") BTN
+  ul
+    li {{user.username}}
+    li {{user.number}}
