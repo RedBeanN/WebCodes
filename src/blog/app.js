@@ -27,6 +27,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
+  app.use(express.favicon(__dirname + '/publick/img/favicon.png'));
 });
 
 
@@ -42,7 +43,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
-app.get('/user/user', routes.user)
+app.get('/user/user', routes.user);
 
 // JSON API
 
@@ -57,6 +58,7 @@ app.get('/api/index', api.getIndex);
 app.get('/api/regist', api.getRegist);
 app.post('/api/login', api.login);
 app.post('/api/postpage', api.postPage);
+app.post('/api/regist', api.regist);
 // END ADD
 
 // redirect all others to the index (HTML5 history)

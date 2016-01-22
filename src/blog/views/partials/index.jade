@@ -1,13 +1,19 @@
-p 现在有{{posts.length}}篇文章  
+p 现在有{{pagingConfig.totalItems || 0}}篇文章  
   a(href='addPost') 添加新文章
+  span#checkbox
+    input#checkbox(type='checkbox' ng-model='previewed')
+    | 关闭文章预览
 
-div.posts(ng-repeat='post in posts')
-  h3 {{post.title}}
-  p {{post.text}}
-  a(href='readPost/{{post.id}}') 查看全文
-  |  - 
-  a(href='editPost/{{post.id}}') 编辑文章
-  |  - 
-  a(href='deletePost/{{post.id}}') 删除文章
+div
+  div#post-container
+    div.posts(ng-repeat='post in posts')
+      h3 {{post.title}}
+      p(ng-hide='previewed' ng-bind-html='post.text')
+      div
+        a(href='readPost/{{post.id}}') 查看全文
+        |  - 
+        a(href='editPost/{{post.id}}') 编辑文章
+        |  - 
+        a.delete(href='deletePost/{{post.id}}') 删除文章
 
-am-paging(config="pagingConfig")
+  am-paging(config="pagingConfig")

@@ -1,0 +1,24 @@
+div.page-list
+  ul.paging(ng-show='config.totalPages > 1')
+    li(ng-class='{disabled: config.currentPage == 1}' ng-click='firstPage()')
+      span <<
+    li(ng-class='{disabled: config.currentPage == 1}' ng-click='prevPage()')
+      span <
+    li(ng-repeat='item in pages track by $index' ng-class='{active: item == config.currentPage, separate: item == \'...\'}' ng-click='changePage(item)')
+      span {{item}}
+    li(ng-class='{disabled: config.currentPage == config.totalPages}' ng-click='nextPage()')
+      span >
+    li(ng-class='{disabled: config.currentPage == config.totalPages}' ng-click='lastPage()')
+      span >>
+    div.page-total(ng-show='config.totalItems > 0')
+      | 第
+      input(type='text' placeholder='{{config.currentPage}}' ng-model='jumpTo' ng-blur='pageJumping()')
+      | 页 每页
+      input(type='text' placeholder='{{config.itemsPerPage}}' ng-model='itemsPerPage' ng-blue='setItemsPerPage()')
+      | 条 共
+      strong {{config.totalPages}}
+      | 页/
+      strong {{config.totalItems}}
+      | 条
+
+  div.no-items(ng-hide='config.totalItems > 0') 暂无数据

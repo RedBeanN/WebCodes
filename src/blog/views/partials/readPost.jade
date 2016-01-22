@@ -1,6 +1,18 @@
 a#back(href='/') 返回
 br
-section
-  h3 {{post.title}}
-  div#para
-    p(ng-repeat='para in post.text') {{para}}
+
+div(ng-controller='mdCtrl' ng-model='form')
+  div#post-container
+    h2 {{form.title}}
+    div.markdown#read-post(ng-bind-html='form.text')
+    div#comments
+      strong 评论
+      div.comment(ng-hide='form.comments.length') 现在还没有评论
+      div.comment(ng-repeat='comment in form.comments')
+        span.comment-author {{comment.author}}
+        p.comment-text
+          span.at(ng-show='comment.at') {{'@'+comment.at}} 
+          | {{comment.text}}
+        div
+          a(href='reply-comment/{{form.id}}/{{comment.id}}') 回复评论
+          a.delete(href='delete-comment/{{form.id}}/{{comment.id}}') 删除评论

@@ -22,7 +22,7 @@
   .markdown { height: 640px; }
 }
 @media screen and (max-height: 768px) {
-  .markdown { height: 500px; }
+  .markdown { height: 440px; }
 }
 
 .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {

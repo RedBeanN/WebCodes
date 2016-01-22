@@ -1,10 +1,10 @@
 a#back(href='/') 返回
 br
-h2 {{post.title}}
-div#para
-  p(ng-repeat='para in post.text') {{para}}
+div(ng-controller='mdCtrl' ng-model='form')
+  h2 {{form.title}}
+  div.markdown#read-post(ng-bind-html='form.text')
 p#blog-btn
-  | 删除操作是不可恢复的，您确定要继续吗？ 
+  span 删除操作是不可恢复的，您确定要继续吗？ 
   br
   button(ng-click='deletePost()') 确定
   |  - 

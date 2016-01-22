@@ -47,7 +47,6 @@ blogApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
 blogApp.controller('mdCtrl', ['$scope', function($scope) {
   if(!$scope.form.text) $scope.form.text = '';
 }]).directive('tab', function() {
-  // optimization for tab key
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -71,7 +70,7 @@ blogApp.controller('mdCtrl', ['$scope', function($scope) {
 }).directive('amPaging', [function() {
   return {
   restrict: 'EA',
-  template: amPagingTemplate,
+  templateUrl: 'partials/paging',
   replace: true,
   scope: {
     config: '='
@@ -117,18 +116,23 @@ blogApp.controller('mdCtrl', ['$scope', function($scope) {
           scope.pages.push(i);
         }
       }
-
       if (scope.config.onChange) {
         if(!(oldValue != newValue && oldValue[0] == 0)) scope.config.onChange();
       }
       scope.$parent.config = scope.config;
     }
 
+    scope.firstPage = function() {
+      if (scope.config.currentPage > 1) scope.config.currentPage = 1;
+    }
     scope.prevPage = function() {
       if (scope.config.currentPage > 1) scope.config.currentPage -= 1;
     }
     scope.nextPage = function() {
       if (scope.config.currentPage < scope.config.totalPages) scope.config.currentPage += 1;
+    }
+    scope.lastPage = function() {
+      if (scope.config.currentPage < scope.config.totalPages) scope.config.currentPage = scope.config.totalPages;
     }
     scope.pageJumping = function() {
       scope.jumpTo = parseInt(scope.jumpTo);
@@ -161,22 +165,3 @@ userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
     });
   $locationProvider.html5Mode(true);
 }]);
-
-var amPagingTemplate = function() {
-  return '<div class="page-list">' +
-          '<ul class="paging" ng-show="config.totalItems > 0">' +
-          '<li ng-class="{disabled: config.currentPage == 1}" ng-click="prevPage()"><span>←</span></li>' +
-          '<li ng-repeat="item in pages track by $index" ng-class="{active: item == config.currentPage, separate: item == \'...\'}" ' +
-          'ng-click="changePage(item)">' +
-          '<span>{{ item }}</span>' +
-          '</li>' +
-          '<li ng-class="{disabled: config.currentPage == config.totalPages}" ng-click="nextPage()"><span>→</span></li>' +
-          '</ul>' +
-          '<div class="page-total" ng-show="config.totalItems > 0">' +
-          '第<input type="text" placeholder="{{config.currentPage}}" ng-model="jumpTo" ng-blur="pageJumping()"/>页 ' +
-          '每页<input type="text" placeholder="{{config.itemsPerPage}}" ng-model="itemsPerPage"  ng-blur="setItemsPerPage()"/>条' +
-          '/共<strong>{{ config.totalItems }}</strong>条' +
-          '</div>' +
-          '<div class="no-items" ng-show="config.totalItems <= 0">暂无数据</div>' +
-          '</div>';
-}

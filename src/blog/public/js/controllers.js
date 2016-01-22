@@ -4,19 +4,22 @@ function IndexCtrl($scope, $http) {
     totalItems: 0,
     itemsPerPage: 10,
     onChange: function() {
-      console.log('onchange');
       var postpack = $scope.pagingConfig;
       $http.post('/api/postpage', postpack).
         success(function(data) {
-          $scope.pagingConfig = data.config;
+          // update pagingConfig
+          $scope.pagingConfig.currentPage = data.config.currentPage;
+          $scope.pagingConfig.totalItems = data.config.totalItems;
+          $scope.pagingConfig.itemsPerPage = data.config.itemsPerPage;
+          $scope.pagingConfig.totalPages = data.config.totalPages;
           $scope.posts = data.posts;
+          // markdownize texts
+          for (var key in $scope.posts) {
+            $scope.posts[key].text = marked($scope.posts[key].text);
+          }
         });
     }
   };
-/*  $http.get('/api/posts').
-    success(function(data, status, headers, config) {
-      $scope.posts = data.posts;
-    });*/
 }
 
 function AddPostCtrl($scope, $http, $location) {
@@ -31,9 +34,12 @@ function AddPostCtrl($scope, $http, $location) {
 }
 
 function ReadPostCtrl($scope, $http, $routeParams) {
+  $scope.form = {};
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {
-      $scope.post = data.post;
+      $scope.form = data.post;
+      $scope.form.text = marked(data.post.text.join('\n'));
+      $scope.form.comments = data.post.comments;
     });
 }
 
@@ -54,9 +60,11 @@ function EditPostCtrl($scope, $http, $location, $routeParams) {
 }
 
 function DeletePostCtrl($scope, $http, $location, $routeParams) {
+  $scope.form = {};
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {
-      $scope.post = data.post;
+      $scope.form = data.post;
+      $scope.form.text = marked(data.post.text.join('\n'));
     });
 
   $scope.deletePost = function () {
@@ -94,7 +102,6 @@ userApp.controller('clickCtrl', ['$scope', '$http', '$timeout', function($scope,
   };
   $scope.post = function(op) {
     if (op == 'logout') {
-      //$scope.showLogin();
       UserIndexController($scope, $timeout)
     } else if (op == 'reset') {
       for (var key in $scope.items.lines) {
@@ -123,7 +130,7 @@ userApp.controller('clickCtrl', ['$scope', '$http', '$timeout', function($scope,
             $scope.items.operations = ops;
             $scope.items.waiting = false;
           }, 500);
-        })
+        });
     }
   };
   $scope.checkValidation = function() {
@@ -131,7 +138,7 @@ userApp.controller('clickCtrl', ['$scope', '$http', '$timeout', function($scope,
     check(it);
   };
   $scope.removeErr = function() {
-    changeErr(getID(this.line.title), 0);
+    changeErr(validator.getID(this.line.title), 0);
   };
 }]);
 
@@ -145,9 +152,10 @@ function UserIndexController($scope, $timeout) {
   showWaiting($scope);
   $timeout(function() {
     $scope.items.data = [
-      {message: '游客，请点击上方按钮登录或注册'}
+      {message: '游客，请点击上方按钮登录或注册。'}
     ];
     $scope.items.waiting = false;
+    $scope.items.isLogin = false;
     bindClick();
   }, 500);
 }
