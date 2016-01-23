@@ -65,8 +65,9 @@ var validator = {
   },
 
   isAttrValueUnique: function(registry, user, attr){
+    if (attr == 'password' || attr == 'repeat') return true;
     for (var key in registry) {
-      if (registry.hasOwnProperty(key) && registry[key][attr] == user[attr]) return false;
+      if (registry[key][attr] == user[attr]) return false;
     }
     return true;
   },

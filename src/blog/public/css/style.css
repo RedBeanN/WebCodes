@@ -193,12 +193,12 @@ h3 {
   overflow: auto;
   transition-duration: 0.5s;
 }
-@media screen and (min-height: 769px) {
+@media screen and (min-height: 961px) {
   #right { height: 800px; }
   #right textarea { height: 640px; }
   #post-container {height: 725px; }
 }
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 960px) {
   #right { height: 600px; }
   #right textarea { height: 440px; }
   #post-container {height: 525px; }
@@ -273,6 +273,23 @@ h3 {
 }
 .delete:hover {
   background: red;
+}
+.error-message {
+  color: red;
+  margin-top: -10px;
+}
+
+.checkbox {
+  height: 20px;
+  margin: 0;
+  text-align: left;  
+}
+.checkbox input {
+  opacity: 0;
+  width: 0px !important;
+  height: 0px !important;
+  margin: 0;
+  text-align: left;
 }
 
 

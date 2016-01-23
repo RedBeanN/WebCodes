@@ -8,6 +8,13 @@ div(ng-controller='mdCtrl' ng-model='form')
     div#comments
       strong 评论
       div.comment(ng-hide='form.comments.length') 现在还没有评论
+      div
+        label.checkbox
+          input(type='checkbox' ng-model='showAddComment')
+          | {{showAddComment?'-':'+'}} add comment
+        div(ng-show='showAddComment')
+          input(ng-model='form.comments.commentToAdd')
+          button#add-comment(ng-click='addComment()') submit
       div.comment(ng-repeat='comment in form.comments')
         span.comment-author {{comment.author}}
         p.comment-text

@@ -30,11 +30,20 @@ var data = {
       text: ["Sed egestas", "Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus."],
       comments: []
     }
-  ]
+  ],
+  users: {
+      'hongshn': {
+        username: 'hongshn',
+        password: 'hsn41432',
+        number: '14359047',
+        email: 'shnhong@gmail.com',
+        phone: '15602404445',
+        root: 'administrator'
+      }
+    }
 };
-var users = {};
 
-var items = {
+var templates = {
   login: {
     lines: [
       {title: '用户名', type: 'text'},
@@ -65,25 +74,6 @@ var items = {
   }
 };
 
-// GET
-
-/*exports.posts = function (req, res) {
-  var posts = [];
-  if (!data) res.json({});
-  else {
-  data.posts.forEach(function (post, i) {
-    posts.push({
-      id: i,
-      title: post.title,
-      text: post.text[0].substr(0, 50) + '...'
-    });
-  });
-  res.json({
-    posts: posts
-  });
-  }
-};*/
-
 exports.post = function (req, res) {
   var id = req.params.id;
   if (id >= 0 && id < data.posts.length) {
@@ -103,15 +93,23 @@ exports.addPost = function (req, res) {
 };
 
 exports.postPage = function (req, res) {
-  var page = getPostPage(req.body);
-  res.json(page);
+  res.json(getPostPage(req.body));
 }
 
 // PUT
 
+exports.addComment = function (req, res) {
+  var id = req.params.id;
+  if (id >= 0 && id < data.posts.length) {
+    req.body.id = data.posts[id].comments.length;
+    if (req.cookies.username) req.body.author = req.cookies.username;
+    data.posts[id].comments.push(req.body);
+    res.json(req.body);
+  } else res.json(false);
+}
+
 exports.editPost = function (req, res) {
   var id = req.params.id;
-
   if (id >= 0 && id < data.posts.length) {
     data.posts[id] = req.body;
     res.json(true);
@@ -134,63 +132,62 @@ exports.deletePost = function (req, res) {
 };
 
 exports.getIndex = function (req, res) {
-  var item = items.login;
-  if (req.cookies.username) item.lines[0].value = req.cookies.username;
+  if (req.cookies.username) {
+    res.json(getDetailPage(req.cookies.username));
+  } else {
+    var items = {
+      welcome: '游客，请点击上方按钮登录或注册。',
+      waiting: false,
+      isLogin: false
+    };
+    res.json(items);
+  }
+}
+
+exports.logout = function (req, res) {
+  res.cookie('username', '', {maxAge: -1});
+  res.end();
+}
+
+exports.getLogin = function (req, res) {
+  var loginPage = templates.login;
   setTimeout(function() {
-    res.json(item);
+    res.json(loginPage);
   }, 500);
   //res.json(item);
 };
 
 exports.getRegist = function (req, res) {
   setTimeout(function() {
-    res.json(items.regist);
+    res.json(templates.regist);
   }, 500);
   //res.json(items.regist);
 };
 
 exports.login = function(req, res) {
-  var items = {
-    data: [
-      {message: req.body[0].title + ': ' + req.body[0].value},
-      {message: req.body[1].title + ': ' + req.body[1].value}
-    ],
-    operations: [
-      {value: '退出', type: 'submit', title: 'logout', id: 'submit'}
-    ],
-    waiting: false,
-    isLogin: true
-  };
-  setTimeout(function() {
-    res.json(items);
-  }, 500)
-  //res.json(items);
+  if (!!req.body[0].value && !!data.users[req.body[0].value] && data.users[req.body[0].value].password == req.body[1].value) {
+    setTimeout(function() {
+      res.cookie('username', req.body[0].value, {maxAge: cookieMaxAge});
+      res.json(getDetailPage(req.body[0].value));
+    }, 500)
+  } else {
+    res.send(false);
+  }
 };
 
 exports.regist = function(req, res) {
-  /*console.log(req.body);
-  var items = {
-    data: [{message: req.body[0].title + ': ' + req.body[0].value},
-      {message: req.body[1].title + ': ' + req.body[1].value}],
-    operations: [{value: '退出', type: 'submit', title: 'logout', id: 'submit'}],
-    waiting: false,
-    isLogin: true};*/
   try {
     var user = parseUser(req.body);
     checkUser(user);
-    users[user.username] = user;
+    user.root = 'user';
+    data.users[user.username] = user;
     //users[user.username].password = bcrypt.hashSync(req.body.password, salt);
     //registUserToDB(users[user.username]);
     res.cookie('username', req.body.username, {maxAge: cookieMaxAge});
-    res.json({
-      data: [{message: '用户名：' + users[user.username].username}],
-      operations: [{value: '退出', type: 'submit', title: 'logout', id: 'submit'}],
-      waiting: false,
-      isLogin: true
-    });
+    res.json(getDetailPage(req.body[0].value));
   } catch(err) {
     res.json({
-      data: [{message: err.message}],
+      data: err.message.split('\n'),
       waiting: false,
       isLogin: false
     })
@@ -222,19 +219,45 @@ function getPostPage (conf) {
     };
   }
 }
+function getDetailPage(username) {
+  return {
+    detail: [
+      {message: '用户名: ' + data.users[username].username},
+      {message: '学　号: ' + data.users[username].number},
+      {message: '邮　箱: ' + data.users[username].email},
+      {message: '电　话: ' + data.users[username].phone},
+      {message: 'root: ' + data.users[username].root}
+    ],
+    operations: [
+      {value: '退出', type: 'submit', title: 'logout', id: 'submit'}
+    ],
+    waiting: false,
+    isLogin: true
+  };
+}
 
 // functions
 function parseUser(body) {
-  return {username: body.username, number: body.number, phone: body.phone, email: body.email};
+  var user = {};
+  user.username = body[0].value;
+  user.password = body[1].value;
+  user.repeat = body[2].value;
+  user.number = body[3].value;
+  user.email = body[4].value;
+  user.phone = body[5].value;
+  return user;
 }
 
 function checkUser(user) {
   var errMsg = [];
   var pw = user['password'];
   for (var key in user) {
-    var _key = validator.getID(key);
-    if (!user[_key] || !validator.isFieldValid(_key, user[_key]), pw) errMsg.push(validator.form[_key].errorMessage);
-    if (!!user[_key] && !validator.isAttrValueUnique(users, user, _key)) errMsg.push(getUniqueErrorMessage(_key));
+    var _key = translateKey(key);
+    if (!user[key]) errMsg.push(_key + ': ' + validator.form[key].errorMessage);
+    else {
+      if (!validator.isFieldValid(key, user[key], pw)) errMsg.push('``' + _key + ': ' + validator.form[key].errorMessage);
+      else if (!validator.isAttrValueUnique(data.users, user, key)) errMsg.push(getUniqueErrorMessage(key));
+    }
   }
   if (errMsg.length > 0) throw new Error(errMsg.join('\n'));
 }
@@ -253,4 +276,16 @@ function getUniqueErrorMessage(key) {
   }
   msg += '已被注册。';
   return msg;
+}
+function translateKey(key) {
+  var msg;
+  switch(key) {
+    case 'username': msg = '用户名'; break;
+    case 'number': msg = '学号'; break;
+    case 'password': msg = '密码'; break;
+    case 'repeat': msg = '重复密码'; break;
+    case 'phone': msg = '电话'; break;
+    case 'email': msg = '邮箱'; break;
+  }
+  return msg + '';
 }

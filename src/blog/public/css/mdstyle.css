@@ -18,10 +18,10 @@
   word-wrap: break-word;
   white-space: pre-wrap;
 }
-@media screen and (min-height: 769px) {
+@media screen and (min-height: 961px) {
   .markdown { height: 640px; }
 }
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 960px) {
   .markdown { height: 440px; }
 }
 

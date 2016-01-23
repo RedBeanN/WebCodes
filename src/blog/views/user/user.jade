@@ -10,8 +10,10 @@ div#user-bar
         input(ng-model='line.value' type='{{line.type}}' ng-focus='removeErr()' ng-blur='checkValidation()')
         p.err-input(id='{{line.id}}')
         br
-      div#data(ng-repeat='data in items.data')
-        p {{data.message}}
+      div#data
+        p(ng-repeat='item in items.detail') {{item.message}}
+        p.error-message(ng-repeat='item in items.data') {{item}}
+        p(ng-show='items.welcome') {{items.welcome}}
       input.btns(ng-repeat='op in items.operations' type='{{op.type}}' value='{{op.value}}' ng-click='post(op.title)' id='{{op.id}}')
       br
       img#waiting(src='img/waiting.jpg' ng-show='items.waiting')

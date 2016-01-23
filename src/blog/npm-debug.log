@@ -1,25 +1,26 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\node.exe',
-1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'start' ]
-2 info using npm@2.14.7
-3 info using node@v4.2.3
-4 verbose stack Error: missing script: start
-4 verbose stack     at run (C:\Program Files (x86)\nodejs\node_modules\npm\lib\run-script.js:142:19)
-4 verbose stack     at C:\Program Files (x86)\nodejs\node_modules\npm\lib\run-script.js:58:5
-4 verbose stack     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:345:5
-4 verbose stack     at checkBinReferences_ (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:309:45)
-4 verbose stack     at final (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:343:3)
-4 verbose stack     at then (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:113:5)
-4 verbose stack     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:232:12
-4 verbose stack     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\graceful-fs\graceful-fs.js:76:16
-4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:380:3)
-5 verbose cwd E:\blog
-6 error Windows_NT 10.0.10586
-7 error argv "C:\\Program Files (x86)\\nodejs\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
-8 error node v4.2.3
-9 error npm  v2.14.7
-10 error missing script: start
-11 error If you need help, you may report this error at:
-11 error     <https://github.com/npm/npm/issues>
-12 verbose exit [ 1, true ]
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'start' ]
+2 info using npm@1.4.21
+3 info using node@v0.10.25
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart application-name@0.0.1
+6 info start application-name@0.0.1
+7 verbose unsafe-perm in lifecycle true
+8 info application-name@0.0.1 Failed to exec start script
+9 error application-name@0.0.1 start: `node app.js`
+9 error Exit status 1
+10 error Failed at the application-name@0.0.1 start script.
+10 error This is most likely a problem with the application-name package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     node app.js
+10 error You can get their info via:
+10 error     npm owner ls application-name
+10 error There is likely additional logging output above.
+11 error System Linux 4.2.0-25-generic
+12 error command "/usr/bin/nodejs" "/usr/bin/npm" "start"
+13 error cwd /home/hongshn/Desktop/workspace/src/blog
+14 error node -v v0.10.25
+15 error npm -v 1.4.21
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]

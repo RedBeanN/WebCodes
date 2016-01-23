@@ -17,7 +17,7 @@ function check(it) {
   it.id = validator.getID(it.type);
   if (it.value) {
     if (it.id == 'repeat') {
-      var pwd = $('#password').val();
+      var pwd = $('.inputs')[1].children[1].value;
       if (!validator.isRepeatValid(it.value, pwd)) {
         changeErr(it.id, 1, validator.getErrorMessage(it.id));
       } else changeErr(it.id, 0);
