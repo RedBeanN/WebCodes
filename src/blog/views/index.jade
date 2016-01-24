@@ -4,9 +4,9 @@ block content
   div#header
     h1 BLOG
 
-  div#body
+  div#body(ng-controller='clickCtrl')
     div#left
-      div#user-bar(ng-view)
+      am-user(config='config')#user-bar
 
     div#right
       div(ng-view)
@@ -20,6 +20,7 @@ block content
   script(src='js/lib/jquery.js')
   script(src='js/lib/highlight.pack.js')
   script(src='js/lib/marked.js')
+  script(src='js/paging.js')
   script(src='js/app.js')
   script(src='js/services.js')
   script(src='js/controllers.js')

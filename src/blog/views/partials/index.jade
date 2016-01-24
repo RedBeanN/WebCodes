@@ -8,12 +8,12 @@ div
   div#post-container
     div.posts(ng-repeat='post in posts')
       h3 {{post.title}}
+        span.post-author {{post.author}}
+        span.date(ng-hide='previewed') {{post.date}}
       p(ng-hide='previewed' ng-bind-html='post.text')
       div
         a(href='readPost/{{post.id}}') 查看全文
-        |  - 
-        a(href='editPost/{{post.id}}') 编辑文章
-        |  - 
-        a.delete(href='deletePost/{{post.id}}') 删除文章
+        a(href='editPost/{{post.id}}' ng-show='post.root') 编辑文章
+        a.delete(href='deletePost/{{post.id}}' ng-show='post.root') 删除文章
 
   am-paging(config="pagingConfig")

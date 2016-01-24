@@ -54,14 +54,17 @@ app.post('/api/post', api.addPost);
 app.put('/api/post/:id', api.editPost);
 app.delete('/api/post/:id', api.deletePost);
 // ADD
-app.get('/api/login', api.getLogin);
-app.get('/api/regist', api.getRegist);
-app.get('/api/index', api.getIndex);
-app.get('/api/logout', api.logout);
 app.post('/api/login', api.login);
 app.post('/api/regist', api.regist);
-app.put('/api/add-comment/:id', api.addComment);
+app.get('/api/logout', api.logout);
+app.get('/api/login', api.getLogin);
+app.get('/api/index', api.getIndex);
+app.get('/api/regist', api.getRegist);
 app.put('/api/postpage', api.postPage);
+app.put('/api/add-reply', api.addReply);
+app.put('/api/delete-reply', api.deleteReply);
+app.put('/api/add-comment/:id', api.addComment);
+app.put('/api/delete-comment', api.deleteComment);
 // END ADD
 
 // redirect all others to the index (HTML5 history)

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+  <script type="text/javascript" src="lib/angular.min.js"></script>
+  <script type="text/javascript" src="user.js"></script>
+  <script type="text/javascript">
+    angular.module('myApp', ['am.user']).controller('main', ['$scope', '$http', function($scope, $http) {
+      $scope.config = {};
+      $scope.config.items= {
+        isLogin: false,
+        waiting: false,
+        welcome: true
+      };
+        $scope.config.showLogin = function() {
+          console.log('1');
+          if ($scope.config.items.waiting) return;
+          showWaiting($scope);
+          $http.get('/api/login').
+            success(function(data) {
+              $('#userpage').fadeOut(0);
+              $scope.pagename = '登录';
+              $scope.config.items = data;
+              $('#userpage').fadeIn(500);
+            });
+        };
+        $scope.showRegist = function() {
+          if ($scope.config.items.waiting) return;
+          showWaiting($scope);
+          $http.get('/api/regist').
+            success(function(data) {
+              $('#userpage').fadeOut(0);
+              $scope.pagename = '注册';
+              $scope.config.items = data;
+              $('#userpage').fadeIn(500);
+            });
+        };
+        $scope.post = function(op) {
+          if (op == 'logout') {
+            $http.get('api/logout').
+              success(function () {
+                UserIndexController($scope, $http, $timeout)
+              })
+          } else if (op == 'reset') {
+            for (var key in $scope.config.items.lines) {
+              $scope.config.items.lines[key].value = '';
+            }
+          } else if (op) {
+            var ops = $scope.config.items.operations;
+            var user = [];
+            $scope.config.items.operations = [];
+            $scope.config.items.waiting = true;
+            for(var key in $scope.config.items.lines) {
+              user[key] = {
+                'title': $scope.config.items.lines[key].title,
+                'value': $scope.config.items.lines[key].value
+              };
+            }
+            $http.post('api/' + op, user).
+              success(function(data) {
+                if (data.isLogin) {
+                  $scope.config.items = {};
+                  $scope.config.items.welcome = 'Log in success, welcome.';
+                  $timeout(function() {
+                    $('#userpage').fadeOut(0);
+                    $scope.pagename = '用户详情';
+                    $scope.config.items = data;
+                    $('#userpage').fadeIn(500);
+                  }, 1000)
+                } else {
+                  $timeout(function(){
+                    $scope.config.items.operations = ops;
+                    $scope.config.items.data = data.data;
+                    $scope.config.items.waiting = false;
+                  }, 500);
+                }
+              }).
+              error(function(err) {
+                $timeout(function(){
+                  $scope.config.items.operations = ops;
+                  $scope.config.items.waiting = false;
+                }, 500);
+              });
+          }
+        };
+        $scope.checkValidation = function() {
+          var it = {type: this.line.title, value: this.line.value};
+          check(it);
+        };
+        $scope.removeErr = function() {
+          changeErr(validator.getID(this.line.title), 0);
+        };
+    }])
+      function showWaiting(scope) {
+        scope.pagename = '';
+        scope.items = {};
+        scope.items.waiting = true;
+      }
+  </script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="main">
+    <am-user config="config"></am-user>
+  </div>
+</body>
+</html>

@@ -9,13 +9,25 @@ body, input, button {
   font: 14px "Microsoft YaHei", Arial, sans-serif;
   text-align: center;
 }
-form {
-  transition-duration: 0.5s;
+button {
+  border: none;
+  border-left: 5px solid #8888ff;
+  border-right: 5px solid #8888ff;
+  border-radius: 50px;
+  background-color: #66ccff;
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+button:hover {
+  border-left: 5px solid #66ccff;
+  border-right: 5px solid #66ccff;
+  background-color: #9999ff;
+  color: white;
 }
 button, input {
   outline: none;
 }
-a {
+a, label {
   display: inline-block;
   width: 90px;
   height: 24px;
@@ -24,8 +36,10 @@ a {
   color: black;
   text-align: center;
   font-size: 16px;
+  margin-right: 10px;
+  text-decoration: none;
 }
-a:hover {
+a:hover, label:hover {
   background-color: #6666ff;
   color: white;
 }
@@ -84,6 +98,7 @@ h3 {
 .regist, .login {
   width: 50%;
   border: none;
+  border-radius: 0 0 0 0;
   height: 36px;
   background-color: #66ccff;
   color: black;
@@ -93,6 +108,7 @@ h3 {
 }
 .regist:hover, .login:hover {
   background-color: #9999ff;
+  border: none;
 }
 .active {
   background-color: #6666ff;
@@ -247,26 +263,41 @@ h3 {
 .comment {
   border: none;
   border-left: 5px solid #66ccff;
-  padding-left: 10px;
-  margin-left: 10px;
-  margin-top: 10px;
+  border-right: 5px solid #66ccff;
+  background-color: rgba(233, 244, 210, 0.5);
+  padding: 10px;
+  margin: 10px;
 }
 .comment-author {
   font-size: 16px;
+  font-weight: bold;
   color: blue;
 }
 .comment-text {
   color: gray;
   padding-left: 10px;
-  margin-top: 0px !important;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
 }
 .at {
   color: #6666ff;
 }
-.comment a {
+.comment-operations {
+  text-align: left;
+  width: 100%;
+}
+.comment a, label {
   font-size: 14px;
-  width: 68px;
+  width: 75px;
   height: 20px;
+  /*margin-right: 10px;*/
+  margin-top: 0;
+  text-align: center !important;
+  cursor: pointer;
+  /*margin-bottom: 10px;*/
+}
+label input {
+  display: none;
 }
 .delete {
   background-color: #ff7878;
@@ -291,19 +322,62 @@ h3 {
   margin: 0;
   text-align: left;
 }
+.date {
+  color: #777;
+  font-weight: bold;
+  margin-left: 10px;
+  font-size: 14px;
+}
+#add-comment {
+  margin-left: 20px;
+}
+#add-comment > div > textarea {
+  width: 480px;
+  height: 60px;
+  font-size: 14px;
+  margin-left: 15px !important;
+  margin-top: -20px !important;
+}
+#add-comment > div {
+  margin-top: 30px;
+  margin-left: 0px;
+}
+.reply {
+  width: 320px !important;
+  height: 60px !important;
+  font-size: 14px;
+  margin-left: 30px;
+}
+#add-comment button {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+.guest {
+  color:gray;
+}
+.post-author {
+  color: blue;
+  font-weight: normal;
+  margin-left: 10px;
+  font-size: 14px;
+}
+input.at {
+  width: 80px !important;
+  height: 15px;
+  margin-top: 10px !important;
+  margin-bottom: -10px !important;
+  margin-left: 5px !important;
+}
 
 
-/* styles */
-/*Stylesheet*/
-/*css*/
-input:hover, a:hover {
+/*
+  styles.old
+*/
+input:hover, a:hover, label:hover {
   transition-duration: 0.2s;
 }
 form {
   text-align: right;
-}
-a {
-  text-decoration: none;
 }
 input {
   text-align: left;
@@ -373,7 +447,7 @@ input {
   width: 160px;
   margin-left: 35px;
   margin-top: -10px;
-  margin-bottom: -5px;
+  margin-bottom: -2px;
   height: 20px;
   transition-duration: 0.5s;
 }

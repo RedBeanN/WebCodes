@@ -1,25 +1,17 @@
-function IndexCtrl($scope, $http) {
+var isIdentityChanged = 'no';
+
+function IndexCtrl($scope, $http, blogService) {
   if (!$scope.pagingConfig) $scope.pagingConfig = {
     currentPage: 1,
     totalItems: 0,
     itemsPerPage: 10,
     onChange: function() {
+      isIdentityChanged = 'no';
       var postpack = $scope.pagingConfig;
-      $http.put('/api/postpage', postpack).
-        success(function(data) {
-          // update pagingConfig
-          $scope.pagingConfig.currentPage = data.config.currentPage;
-          $scope.pagingConfig.totalItems = data.config.totalItems;
-          $scope.pagingConfig.itemsPerPage = data.config.itemsPerPage;
-          $scope.pagingConfig.totalPages = data.config.totalPages;
-          $scope.posts = data.posts;
-          // markdownize texts
-          for (var key in $scope.posts) {
-            $scope.posts[key].text = marked($scope.posts[key].text);
-          }
-        });
+      blogService.getPostPage($scope, $http, postpack);
     }
   };
+  $scope.$watch(function() { return isIdentityChanged; }, $scope.pagingConfig.onChange);
 }
 
 function AddPostCtrl($scope, $http, $location) {
@@ -33,47 +25,17 @@ function AddPostCtrl($scope, $http, $location) {
   };
 }
 
-function ReadPostCtrl($scope, $http, $location, $routeParams) {
+function ReadPostCtrl($scope, $http, $location, $routeParams, $timeout, blogService) {
   $scope.form = {};
-  $http.get('/api/post/' + $routeParams.id).
-    success(function(data) {
-      $scope.form = data.post;
-      $scope.form.text = marked(data.post.text.join('\n'));
-      $scope.form.comments = data.post.comments;
-      $scope.addComment = function () {
-        if (!!$scope.form.comments.commentToAdd) {
-          var comment = {
-            author: 'guest',
-            text: $scope.form.comments.commentToAdd
-          };
-          $http.put('/api/add-comment/' + $scope.form.id, comment).
-            success(function(data) {
-              $scope.form.comments.push(data);
-            });
-        }
-      };
-      $scope.deleteComment = function () {
-        var toDelete = '/api/delete-comment/'
-        + $scope.form.id + '/' + this.id;
-        console.log(toDelete);
-      }
-    });
+  blogService.readPost($scope, $http, $routeParams, $location, $timeout);
+  $scope.$watch(function() { return isIdentityChanged; }, function() {
+    blogService.readPost($scope, $http, $routeParams, $location, $timeout);
+  });
 }
 
-function EditPostCtrl($scope, $http, $location, $routeParams) {
+function EditPostCtrl($scope, $http, $location, $routeParams, blogService) {
   $scope.form = {};
-  $http.get('/api/post/' + $routeParams.id).
-    success(function(data) {
-      $scope.form = data.post;
-      $scope.form.text = $scope.form.text.join('\n');
-    });
-
-  $scope.editPost = function () {
-    $http.put('/api/post/' + $routeParams.id, $scope.form).
-      success(function(data) {
-        $location.url('/readPost/' + $routeParams.id);
-      });
-  };
+  blogService.editPost($scope, $http, $location, $routeParams);
 }
 
 function DeletePostCtrl($scope, $http, $location, $routeParams) {
@@ -88,6 +50,9 @@ function DeletePostCtrl($scope, $http, $location, $routeParams) {
     $http.delete('/api/post/' + $routeParams.id).
       success(function(data) {
         $location.url('/');
+      }).
+      error(function(err) {
+        $location.url('/');
       });
   };
 
@@ -96,73 +61,83 @@ function DeletePostCtrl($scope, $http, $location, $routeParams) {
   };
 }
 
-userApp.controller('clickCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
-  $scope.showLogin = function() {
-    if ($scope.items.waiting) return;
+blogApp.controller('clickCtrl', ['$scope', '$http', '$timeout', 'blogService', function($scope, $http, $timeout, blogService) {
+  if (!$scope.config) $scope.config = {};
+  $scope.config.items = {
+    waiting: false,
+    isLogin: false,
+    welcome: 'welcome'
+  }
+  UserIndexController($scope, $http, $timeout);
+  $scope.config.showLogin = function() {
+    if ($scope.config.items.waiting) return;
     showWaiting($scope);
     $http.get('/api/login').
       success(function(data) {
         $('#userpage').fadeOut(0);
-        $scope.pagename = '登录';
-        $scope.items = data;
+        $scope.config.pagename = '登录';
+        $scope.config.items = data;
         $('#userpage').fadeIn(500);
       });
   };
-  $scope.showRegist = function() {
-    if ($scope.items.waiting) return;
+  $scope.config.showRegist = function() {
+    if ($scope.config.items.waiting) return;
     showWaiting($scope);
     $http.get('/api/regist').
       success(function(data) {
         $('#userpage').fadeOut(0);
-        $scope.pagename = '注册';
-        $scope.items = data;
+        $scope.config.pagename = '注册';
+        $scope.config.items = data;
         $('#userpage').fadeIn(500);
       });
   };
-  $scope.post = function(op) {
+  $scope.config.post = function(op) {
     if (op == 'logout') {
       $http.get('api/logout').
         success(function () {
+          isIdentityChanged = 'yes';
           UserIndexController($scope, $http, $timeout)
         })
     } else if (op == 'reset') {
-      for (var key in $scope.items.lines) {
-        $scope.items.lines[key].value = '';
+      for (var key in $scope.config.items.lines) {
+        $scope.config.items.lines[key].value = '';
       }
     } else if (op) {
-      var ops = $scope.items.operations;
+      var ops = $scope.config.items.operations;
       var user = [];
-      $scope.items.operations = [];
-      $scope.items.waiting = true;
-      for(var key in $scope.items.lines) {
+      $scope.config.items.operations = [];
+      $scope.config.items.waiting = true;
+      for(var key in $scope.config.items.lines) {
         user[key] = {
-          'title': $scope.items.lines[key].title,
-          'value': $scope.items.lines[key].value
+          'title': $scope.config.items.lines[key].title,
+          'value': $scope.config.items.lines[key].value
         };
       }
       $http.post('api/' + op, user).
         success(function(data) {
           if (data.isLogin) {
-            $scope.items = {};
-            $scope.items.welcome = 'Log in success, welcome.';
+            console.log(blogService.getPosts());
+            $scope.config.items = {};
+            $scope.config.items.welcome = 'Log in success, welcome.';
             $timeout(function() {
               $('#userpage').fadeOut(0);
-              $scope.pagename = '用户详情';
-              $scope.items = data;
+              $scope.config.pagename = '用户详情';
+              $scope.config.items = data;
               $('#userpage').fadeIn(500);
             }, 1000)
+            isIdentityChanged = true;
           } else {
             $timeout(function(){
-              $scope.items.operations = ops;
-              $scope.items.data = data.data;
-              $scope.items.waiting = false;
+              $scope.config.items.operations = ops;
+              $scope.config.items.data = data.data;
+              $scope.config.items.waiting = false;
             }, 500);
           }
         }).
         error(function(err) {
           $timeout(function(){
-            $scope.items.operations = ops;
-            $scope.items.waiting = false;
+            $scope.config.items.operations = ops;
+            $scope.config.items.waiting = false;
           }, 500);
         });
     }
@@ -177,23 +152,17 @@ userApp.controller('clickCtrl', ['$scope', '$http', '$timeout', function($scope,
 }]);
 
 function showWaiting($scope) {
-  $scope.pagename = '';
-  $scope.items = {};
-  $scope.items.waiting = true;
+  $scope.config.pagename = '';
+  $scope.config.items = {};
+  $scope.config.items.waiting = true;
 }
 
 function UserIndexController($scope, $http, $timeout) {
   showWaiting($scope);
-  $http.get('/api/index')./*
-  $timeout(function() {
-    $scope.items.welcome = '游客，请点击上方按钮登录或注册。';
-    $scope.items.waiting = false;
-    $scope.items.isLogin = false;
-    bindClick();
-  }, 500);*/
+  $http.get('/api/index').
     success(function (data) {
-      $scope.items = data;
-      if ($scope.items.isLogin) $scope.pagename = '用户详情';
+      $scope.config.items = data;
+      if ($scope.config.items.isLogin) $scope.config.pagename = '用户详情';
       bindClick();
     });
 }
@@ -213,5 +182,6 @@ function bindClick() {
 
 var isBinded = false;
 
-angular.bootstrap(document.getElementById('user-bar'), ['userApp']);
-angular.bootstrap(document.getElementById('right'), ['blogApp']);
+//angular.bootstrap(document.getElementById('user-bar'), ['userApp']);
+//angular.bootstrap(document.getElementById('right'), ['blogApp']);
+angular.bootstrap(document.getElementById('body'), ['blogApp']);

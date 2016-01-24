@@ -1,19 +1,19 @@
 div#user-bar
-  form(ng-controller='clickCtrl')
-    div#top-button(ng-hide='items.isLogin')
-      button.login(ng-click='showLogin()') 登录
-      button.regist(ng-click='showRegist()') 注册
+  form
+    div#top-button(ng-hide='config.items.isLogin')
+      button.login(ng-click='config.showLogin()') 登录
+      button.regist(ng-click='config.showRegist()') 注册
     div#userpage
-      p#pagename(ng-show='items.isLogin') {{pagename}}
-      div.inputs(ng-repeat='line in items.lines')
+      p#pagename(ng-show='config.items.isLogin') {{config.pagename}}
+      div.inputs(ng-repeat='line in config.items.lines')
         span {{line.title}}
         input(ng-model='line.value' type='{{line.type}}' ng-focus='removeErr()' ng-blur='checkValidation()')
         p.err-input(id='{{line.id}}')
         br
       div#data
-        p(ng-repeat='item in items.detail') {{item.message}}
-        p.error-message(ng-repeat='item in items.data') {{item}}
-        p(ng-show='items.welcome') {{items.welcome}}
-      input.btns(ng-repeat='op in items.operations' type='{{op.type}}' value='{{op.value}}' ng-click='post(op.title)' id='{{op.id}}')
+        p(ng-repeat='item in config.items.detail') {{item.message}}
+        p.error-message(ng-repeat='item in config.items.data') {{item}}
+        p(ng-show='config.items.welcome') {{config.items.welcome}}
+      input.btns(ng-repeat='op in config.items.operations' type='{{op.type}}' value='{{op.value}}' ng-click='config.post(op.title)' id='{{op.id}}')
       br
-      img#waiting(src='img/waiting.jpg' ng-show='items.waiting')
+      img#waiting(src='img/waiting.jpg' ng-show='config.items.waiting')

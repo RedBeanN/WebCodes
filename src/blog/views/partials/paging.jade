@@ -1,20 +1,20 @@
 div.page-list
   ul.paging(ng-show='config.totalPages > 1')
     li(ng-class='{disabled: config.currentPage == 1}' ng-click='firstPage()')
-      span <<
+      span &lsaquo;&lsaquo;
     li(ng-class='{disabled: config.currentPage == 1}' ng-click='prevPage()')
-      span <
+      span &lsaquo;
     li(ng-repeat='item in pages track by $index' ng-class='{active: item == config.currentPage, separate: item == \'...\'}' ng-click='changePage(item)')
       span {{item}}
     li(ng-class='{disabled: config.currentPage == config.totalPages}' ng-click='nextPage()')
-      span >
+      span &rsaquo;
     li(ng-class='{disabled: config.currentPage == config.totalPages}' ng-click='lastPage()')
-      span >>
+      span &rsaquo;&rsaquo;
     div.page-total(ng-show='config.totalItems > 0')
       | 第
       input(type='text' placeholder='{{config.currentPage}}' ng-model='jumpTo' ng-blur='pageJumping()')
       | 页 每页
-      input(type='text' placeholder='{{config.itemsPerPage}}' ng-model='itemsPerPage' ng-blue='setItemsPerPage()')
+      input(type='text' placeholder='{{config.itemsPerPage}}' ng-model='itemsPerPage' ng-blur='setItemsPerPage()')
       | 条 共
       strong {{config.totalPages}}
       | 页/

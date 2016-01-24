@@ -1,0 +1,18 @@
+<div class="ng-scope" id="user-bar" >
+  <form class="ng-pristine ng-valid ng-scope">
+    <div id="top-button" ng-hide="config.items.isLogin">
+      <button ng-click="config.showLogin()" class="login">登录</button>
+      <button ng-click="showRegist()" class="regist">注册</button>
+    </div><div id="userpage">
+    <p class="ng-binding ng-hide" id="pagename" ng-show="config.items.isLogin"></p>
+    <!-- ngRepeat: line in config.items.lines -->
+    <div id="data">
+      <!-- ngRepeat: item in config.items.detail --><!-- ngRepeat: item in config.items.data -->
+      <p class="ng-binding" ng-show="config.items.welcome">游客，请点击上方按钮登录或注册。</p>
+    </div>
+    <!-- ngRepeat: op in config.items.operations -->
+    <br />
+    <img class="ng-hide" id="waiting" src="img/waiting.jpg" ng-show="config.items.waiting" />
+  </div>
+</form>
+</div>

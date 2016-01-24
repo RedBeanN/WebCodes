@@ -4,22 +4,46 @@ br
 div(ng-controller='mdCtrl' ng-model='form')
   div#post-container
     h2 {{form.title}}
+      span.date {{form.date}}
     div.markdown#read-post(ng-bind-html='form.text')
     div#comments
       strong 评论
       div.comment(ng-hide='form.comments.length') 现在还没有评论
-      div
-        label.checkbox
-          input(type='checkbox' ng-model='showAddComment')
-          | {{showAddComment?'-':'+'}} add comment
-        div(ng-show='showAddComment')
-          input(ng-model='form.comments.commentToAdd')
-          button#add-comment(ng-click='addComment()') submit
+
       div.comment(ng-repeat='comment in form.comments')
-        span.comment-author {{comment.author}}
+        span.comment-author(ng-class='{guest: comment.author == "guest"}') {{comment.author}}
+          span.date {{comment.date}}
         p.comment-text
           span.at(ng-show='comment.at') {{'@'+comment.at}} 
           | {{comment.text}}
-        div
-          a(href='reply-comment/{{form.id}}/{{comment.id}}') 回复评论
-          a.delete(href='delete-comment/{{form.id}}/{{comment.id}}') 删除评论
+
+        div.comment(ng-repeat='reply in comment.replys')
+          span.comment-author(ng-class='{guest: reply.author == "guest"}') {{reply.author}}
+            span.date {{reply.date}}
+          p.comment-text
+            span.at(ng-show='reply.at') {{'@'+reply.at}} 
+            | {{reply.text}}
+          div.comment-operations
+            a.delete(ng-click='deleteReply(comment.id, reply.id)' ng-show='reply.root') x删除回复
+        div.comment-operations
+          label.checkbox
+            input(type='checkbox' ng-model='comment.showReply')
+            | {{comment.showReply?'-':'+'}}回复评论
+          a.delete(ng-click='deleteComment(comment.id)' ng-show='comment.root') x删除评论
+        div(ng-show='comment.showReply')
+          p @
+            input.at(ng-model='comment.replyAt')
+          textarea.reply(ng-model='comment.replyToAdd')
+          br
+          a(ng-click='addReply(form.id, comment.id)') 回复
+      div#add-comment
+        label.checkbox
+          input(type='checkbox' ng-model='form.showAddComment')
+          | {{form.showAddComment?'-':'+'}} 评论
+
+        div(ng-show='form.showAddComment')
+          textarea(ng-model='form.comments.commentToAdd') 
+          br
+          button(ng-click='addComment()' ng-hide='form.comments.waiting') submit
+          img#waiting(src='img/waiting.jpg' ng-show='form.comments.waiting')
+          p.error-message(ng-show='form.comments.onerror') {{form.comments.errmsg}}
