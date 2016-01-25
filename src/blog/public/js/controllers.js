@@ -27,7 +27,7 @@ function AddPostCtrl($scope, $http, $location) {
 
 function ReadPostCtrl($scope, $http, $location, $routeParams, $timeout, blogService) {
   $scope.form = {};
-  blogService.readPost($scope, $http, $routeParams, $location, $timeout);
+  //blogService.readPost($scope, $http, $routeParams, $location, $timeout);
   $scope.$watch(function() { return isIdentityChanged; }, function() {
     blogService.readPost($scope, $http, $routeParams, $location, $timeout);
   });
@@ -116,7 +116,6 @@ blogApp.controller('clickCtrl', ['$scope', '$http', '$timeout', 'blogService', f
       $http.post('api/' + op, user).
         success(function(data) {
           if (data.isLogin) {
-            console.log(blogService.getPosts());
             $scope.config.items = {};
             $scope.config.items.welcome = 'Log in success, welcome.';
             $timeout(function() {

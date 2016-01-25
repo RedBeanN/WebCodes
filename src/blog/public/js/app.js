@@ -63,7 +63,7 @@ blogApp.controller('mdCtrl', ['$scope', function($scope) {
         }
       });
       scope.$watch('form.text', function(current) {
-        scope.outputText = marked(current);
+        if (typeof(current) != 'object') scope.outputText = marked(current);
       });
     }
   };

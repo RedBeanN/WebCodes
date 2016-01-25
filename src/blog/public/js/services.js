@@ -15,9 +15,9 @@ blogApp.service('blogService', function() {
         $scope.pagingConfig.itemsPerPage = data.config.itemsPerPage;
         $scope.pagingConfig.totalPages = data.config.totalPages;
         $scope.posts = data.posts;
-        for (var key in $scope.posts) {
-          $scope.posts[key].text = marked($scope.posts[key].text);
-        }
+        // for (var key in $scope.posts) {
+        //   $scope.posts[key].text = marked($scope.posts[key].text[0]);
+        // }
         posts = $scope.posts;
         currentPaginConfig = data.config;
       });
@@ -93,17 +93,18 @@ blogApp.service('blogService', function() {
       };
     });
   }
-  this.editPost = function($scope, $http, $location, $routeParams) {
+  this.editPost = function ($scope, $http, $location, $routeParams) {
     $http.get('/api/post/' + $routeParams.id).
-      success(function(data) {
+      success(function (data) {
         $scope.form = data.post;
         $scope.form.text = $scope.form.text.join('\n');
       });
     $scope.editPost = function () {
       $http.put('/api/post/' + $routeParams.id, $scope.form).
-        success(function(data) {
+        success(function (data) {
+          console.log($routeParams.id);
           $location.url('/readPost/' + $routeParams.id);
-        });
+        }).error(function (err) {alert(err)});
     };
   }
 

@@ -13,7 +13,8 @@ div
       p(ng-hide='previewed' ng-bind-html='post.text')
       div
         a(href='readPost/{{post.id}}') 查看全文
-        a(href='editPost/{{post.id}}' ng-show='post.root') 编辑文章
-        a.delete(href='deletePost/{{post.id}}' ng-show='post.root') 删除文章
+        a(href='editPost/{{post.id}}' ng-show='post.isAuthor') 编辑文章
+        a.delete(href='deletePost/{{post.id}}' ng-show='post.isAuthor || post.root') 删除文章
+        a.hide(href='hidePost/{{post.id}}' ng-show='post.root') hide
 
   am-paging(config="pagingConfig")

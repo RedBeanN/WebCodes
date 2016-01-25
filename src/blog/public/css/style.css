@@ -305,6 +305,12 @@ label input {
 .delete:hover {
   background: red;
 }
+.hide {
+  background-color: #cccccc;
+}
+.hide:hover {
+  background-color: gray;
+}
 .error-message {
   color: red;
   margin-top: -10px;

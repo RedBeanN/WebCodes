@@ -1,10 +1,10 @@
 /*
  * Serve JSON to our AngularJS client
  */
+var db = require('../db/db');
+var Promise = require('bluebird');
 
 var validator = require('../public/js/validator.js'),
-    bcrypt = require('bcryptjs'),
-    salt = bcrypt.genSaltSync(10),
     cookieMaxAge = 24 * 60 * 60 * 1000;
 var data = {
   posts: [
@@ -111,20 +111,22 @@ var templates = {
 
 exports.post = function (req, res) {
   var id = req.params.id;
-  if (id >= 0 && id < data.posts.length) {
-    var post = { post: data.posts[id] };
-    post.post.id = id;
-    for (var key in post.post.comments) {
-      if (post.post.comments[key].author == req.cookies.username || isRootUser(req.cookies.username)) {
-        post.post.comments[key].root = true;
-      } else post.post.comments[key].root = false;
-      for (var rep in post.post.comments[key].replys) {
-        if (post.post.comments[key].replys[rep].author == req.cookies.username || isRootUser(req.cookies.username)) {
-          post.post.comments[key].replys[rep].root = true;
-        } else post.post.comments[key].replys[rep].root = false;
+  if (id >= 0) {
+    db.getPostById(id).then(function (data) {
+      var post = { post: data };
+      post.post.id = id;
+      for (var key in post.post.comments) {
+        if (post.post.comments[key].author == req.cookies.username || isRootUser(req.cookies.username)) {
+          post.post.comments[key].root = true;
+        } else post.post.comments[key].root = false;
+        for (var rep in post.post.comments[key].replys) {
+          if (post.post.comments[key].replys[rep].author == req.cookies.username || isRootUser(req.cookies.username)) {
+            post.post.comments[key].replys[rep].root = true;
+          } else post.post.comments[key].replys[rep].root = false;
+        }
       }
-    }
-    res.json(post);
+      res.json(post);
+    });
   } else {
     res.json(false);
   }
@@ -133,12 +135,15 @@ exports.post = function (req, res) {
 // POST
 
 exports.addPost = function (req, res) {
-  data.posts.push(req.body);
-  res.json(req.body);
+  db.pushPostIntoDB(req.body, req.cookies.username);
+  res.json(true);
 };
 
 exports.postPage = function (req, res) {
-  res.json(getPostPage(req.body, req.cookies.username));
+  // res.json(getPostPage(req.body, req.cookies.username));
+  getPostPage(req.body, req.cookies.username).then(function (data) {
+    res.json(data);
+  })
 }
 
 // PUT
@@ -146,12 +151,15 @@ exports.postPage = function (req, res) {
 
 exports.editPost = function (req, res) {
   var id = req.params.id;
-  if (id >= 0 && id < data.posts.length) {
-    data.posts[id] = req.body;
-    res.json(true);
-  } else {
-    res.json(false);
-  }
+  db.updatePostInDB(id, req.cookies.username, false, 'edit', {
+    title: req.body.title,
+    text: req.body.text
+  }).then(function (data) {
+    console.log('update ' + (data ? 'succeeded.' : 'failed'));
+    res.json(data);
+  }, function (error) {
+    res.status(500).json(error);
+  });
 };
 
 // DELETE
@@ -159,18 +167,24 @@ exports.editPost = function (req, res) {
 exports.deletePost = function (req, res) {
   var id = req.params.id;
   if (!req.cookies.username) res.json(false);
-  else if (req.cookies.username != data.posts[id].author && !isRootUser(req.cookies.username)) res.json(false);
-  else if (id >= 0 && id < data.posts.length) {
-    data.posts.splice(id, 1);
-    res.json(true);
-  } else {
-    res.json(false);
-  }
+  db.removePostFromDB(id, req.cookies.username, isRootUser(req.cookies.username)).
+    then(function (data) { res.json(data); })
 };
 
 exports.getIndex = function (req, res) {
-  if (req.cookies.username && isUserExist(req.cookies.username)) {
-    res.json(getDetailPage(req.cookies.username));
+  if (req.cookies.username) {
+    // res.json(getDetailPage(req.cookies.username));
+    db.getUser(req.cookies.username)
+      .then(function (data) {
+        res.json(getDetailPage(data));
+      }, function (err) {
+        res.cookie('username', 'guest', {maxAge: -1});
+        res.json({
+          welcome: '游客，请点击上方按钮登录或注册。',
+          waiting: false,
+          isLogin: false
+        });
+      });
   } else {
     var items = {
       welcome: '游客，请点击上方按钮登录或注册。',
@@ -184,7 +198,7 @@ exports.getIndex = function (req, res) {
 
 exports.logout = function (req, res) {
   res.cookie('username', '', {maxAge: -1});
-  res.end();
+  res.json(true)
 }
 
 exports.getLogin = function (req, res) {
@@ -192,25 +206,26 @@ exports.getLogin = function (req, res) {
   setTimeout(function() {
     res.json(loginPage);
   }, 500);
-  //res.json(item);
 };
 
 exports.getRegist = function (req, res) {
   setTimeout(function() {
     res.json(templates.regist);
   }, 500);
-  //res.json(items.regist);
 };
 
 exports.login = function(req, res) {
-  if (!!req.body[0].value && !!data.users[req.body[0].value] && data.users[req.body[0].value].password == req.body[1].value) {
-    setTimeout(function() {
-      res.cookie('username', req.body[0].value, {maxAge: cookieMaxAge});
-      res.json(getDetailPage(req.body[0].value));
-    }, 500)
-  } else {
-    res.send(false);
-  }
+  db.checkUserInDB(req.body[0].value, req.body[1].value).
+    then(function (data) {
+      res.cookie('username', data.username, {maxAge: cookieMaxAge});
+      res.json(getDetailPage(data));
+    }, function (err) {
+      res.json({
+          data: ['username or password error'],
+          waiting: false,
+          isLogin: false
+        })
+    });
 };
 
 exports.regist = function(req, res) {
@@ -218,11 +233,19 @@ exports.regist = function(req, res) {
     var user = parseUser(req.body);
     checkUser(user);
     user.root = 'user';
-    data.users[user.username] = user;
-    //users[user.username].password = bcrypt.hashSync(req.body.password, salt);
-    //registUserToDB(users[user.username]);
-    res.cookie('username', user.username, {maxAge: cookieMaxAge});
-    res.json(getDetailPage(req.body[0].value));
+    db.registUserToDB(user).
+      then(function (user) {
+        res.cookie('username', user.username, {maxAge: cookieMaxAge});
+        res.json(getDetailPage(user));
+      }, function (error) {
+        res.json({
+          data: error.split('\n'),
+          waiting: false,
+          isLogin: false
+        })
+      });
+  //   res.cookie('username', user.username, {maxAge: cookieMaxAge});
+  //   res.json(getDetailPage(req.body[0].value));
   } catch(err) {
     res.json({
       data: err.message.split('\n'),
@@ -230,9 +253,6 @@ exports.regist = function(req, res) {
       isLogin: false
     })
   }
-  /*setTimeout(function() {
-    res.json(items);
-  }, 500)*/
 }
 
 exports.addComment = function (req, res) {
@@ -288,47 +308,35 @@ exports.deleteReply = function (req, res) {
 
 
 function getPostPage (conf, username) {
-  if (!data) return{};
-  else {
-    conf.totalItems = data.posts.length;
-    conf.totalPages = Math.ceil(conf.totalItems / conf.itemsPerPage);
-    if (conf.currentPage > conf.totalPages) return 'ERROR';
-    var Page = [];
-    for (var i = (conf.currentPage - 1) * conf.itemsPerPage;
-             i <= conf.currentPage * conf.itemsPerPage - 1; i++) {
-      if (i >= conf.totalItems) break;
-      Page.push({
-        id: i,
-        title: data.posts[i].title,
-        author: data.posts[i].author,
-        date: data.posts[i].date,
-        root: (data.posts[i].author == username || isRootUser(username)),
-        text: data.posts[i].text[0].length > 50 ? data.posts[i].text[0].substr(0, 50) + '...' : data.posts[i].text[0]
+  return db.getUserRoot(username).
+    then(function (root) {
+      return db.getPostsByConfig(conf, username, root == 'administrator').then(function(page) {
+        return Promise.resolve({
+                config: conf,
+                posts: page
+              });
       });
-    }
-    return {
-      config: conf,
-      posts: Page
-    };
-  }
+    })
+
 }
-function getDetailPage(username) {
-  return {
+function getDetailPage(user) {
+  var item = {
     detail: [
-      {message: '用户名: ' + data.users[username].username},
-      {message: '学　号: ' + data.users[username].number},
-      {message: '邮　箱: ' + data.users[username].email},
-      {message: '电　话: ' + data.users[username].phone},
-      {message: 'root: ' + data.users[username].root}
+      {message: '用户名: ' + user.username},
+      {message: '学　号: ' + user.number},
+      {message: '邮　箱: ' + user.email},
+      {message: '电　话: ' + user.phone},
+      {message: 'root: ' + user.root}
     ],
     operations: [
       {value: '退出', type: 'submit', title: 'logout', id: 'submit'}
     ],
-    username: data.users[username].username,
-    root: isRootUser(username),
+    username: user.username,
+    root: (user.root == 'administrator'),
     waiting: false,
     isLogin: true
   };
+  return item;
 }
 
 // functions
@@ -350,15 +358,11 @@ function checkUser(user) {
     var _key = translateKey(key);
     if (!user[key]) errMsg.push(_key + ': ' + validator.form[key].errorMessage);
     else {
-      if (!validator.isFieldValid(key, user[key], pw)) errMsg.push('``' + _key + ': ' + validator.form[key].errorMessage);
+      if (!validator.isFieldValid(key, user[key], pw)) errMsg.push(_key + ': ' + validator.form[key].errorMessage);
       else if (!validator.isAttrValueUnique(data.users, user, key)) errMsg.push(getUniqueErrorMessage(key));
     }
   }
   if (errMsg.length > 0) throw new Error(errMsg.join('\n'));
-}
-
-function authUser(user) {
-  if (!bcrypt.compareSync(user.password, users[user.username].password)) throw new Error('Password error');
 }
 
 function getUniqueErrorMessage(key) {
@@ -389,6 +393,7 @@ function isRootUser(username) {
   for (var key in data.users) {
     if (data.users[key].username == username) return (data.users[key].root == 'administrator');
   }
+  return false;
 }
 function isUserExist(username) {
   for (var key in data.users) {
