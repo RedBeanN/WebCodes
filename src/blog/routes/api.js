@@ -221,7 +221,7 @@ exports.login = function(req, res) {
       res.json(getDetailPage(data));
     }, function (err) {
       res.json({
-          data: ['username or password error'],
+          data: ['用户名或密码不正确。'],
           waiting: false,
           isLogin: false
         })
@@ -312,9 +312,9 @@ function getPostPage (conf, username) {
     then(function (root) {
       return db.getPostsByConfig(conf, username, root == 'administrator').then(function(page) {
         return Promise.resolve({
-                config: conf,
-                posts: page
-              });
+          config: conf,
+          posts: page
+        });
       });
     })
 
@@ -326,7 +326,7 @@ function getDetailPage(user) {
       {message: '学　号: ' + user.number},
       {message: '邮　箱: ' + user.email},
       {message: '电　话: ' + user.phone},
-      {message: 'root: ' + user.root}
+      {message: '用户组: ' + (user.root=='administrator'?'管理员':'普通用户')}
     ],
     operations: [
       {value: '退出', type: 'submit', title: 'logout', id: 'submit'}

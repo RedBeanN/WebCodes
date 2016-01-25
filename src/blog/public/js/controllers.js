@@ -117,7 +117,8 @@ blogApp.controller('clickCtrl', ['$scope', '$http', '$timeout', 'blogService', f
         success(function(data) {
           if (data.isLogin) {
             $scope.config.items = {};
-            $scope.config.items.welcome = 'Log in success, welcome.';
+            $scope.config.items.welcome = (op=='login'?
+              '登录成功，欢迎回来！':'注册成功，正在自动登录。');
             $timeout(function() {
               $('#userpage').fadeOut(0);
               $scope.config.pagename = '用户详情';

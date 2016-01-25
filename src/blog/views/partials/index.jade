@@ -10,11 +10,11 @@ div
       h3 {{post.title}}
         span.post-author {{post.author}}
         span.date(ng-hide='previewed') {{post.date}}
-      p(ng-hide='previewed' ng-bind-html='post.text')
+      p(ng-hide='previewed' ng-bind-html='post.text' ng-class='{hidden: post.hiddenByAdmin}')
       div
         a(href='readPost/{{post.id}}') 查看全文
-        a(href='editPost/{{post.id}}' ng-show='post.isAuthor') 编辑文章
+        a(href='editPost/{{post.id}}' ng-show='post.isAuthor && !post.hiddenByAdmin') 编辑文章
         a.delete(href='deletePost/{{post.id}}' ng-show='post.isAuthor || post.root') 删除文章
-        a.hide(href='hidePost/{{post.id}}' ng-show='post.root') hide
+        a.hide(href='hidePost/{{post.id}}' ng-show='post.root') {{post.hiddenByAdmin? '取消隐藏':'隐藏文章'}}
 
   am-paging(config="pagingConfig")

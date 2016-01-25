@@ -34,23 +34,28 @@ userModel.find({username: 'hongshn'}).then(function(data) {
       email: 'admin@hongshn.xyz',
       root: 'administrator'
     })).save();
-    console.log('[Mongoose] Admin does not exist. Create admin account [admin/admin].');
+    console.log('[Mongoose] Admin does not exist. Create admin account.');
   } else {
     console.log('[Mongoose] Admin exists.');
   }
 });
 
-// postModel.find().then(function (data) {
-//   console.log('[Mongoose] ' + (data.length? 'Find ' + data.length + ' data' : 'Cannot find data!'));
-//   for (var key in data) {
-//     console.log(key, data[key].id);
-//   }
-// })
+postModel.find().then(function (data) {
+  console.log('[Mongoose] ' + (data.length? 'Find ' + data.length + ' data' : 'Cannot find data!'));
+  // for (var key in data) {
+  //   console.log(key, data[key].id);
+  // }
+})
 
 exports.getPostById = function (id) {
   return postModel.find().
     then(function (posts) {
       if (!posts.length) return Promise.reject('Cannot Find Post');
+      else if (posts[id].hiddenByAdmin) {
+        var hiddenPost = posts[id];
+        hiddenPost.text = ['`该内容已被管理员隐藏。`'];
+        return Promise.resolve(hiddenPost);
+      }
       else return Promise.resolve(posts[id]);
     })
 }
@@ -67,8 +72,11 @@ exports.getPostsByConfig = function (conf, username, isRootUser) {
               i <= conf.currentPage * conf.itemsPerPage - 1; i++) {
           if (i >= conf.totalItems) break;
           // var post = posts[i];
+          // console.log(posts[id]);
           var post = {};
-          post.text = posts[i].text;
+          if (!posts[i].hiddenByAdmin) post.text = posts[i].text;
+          else post.text = ['该内容已被管理员隐藏'];
+          post.hiddenByAdmin = posts[i].hiddenByAdmin;
           post.title = posts[i].title;
           post.author = posts[i].author;
           post.date = posts[i].date;
@@ -84,7 +92,6 @@ exports.getPostsByConfig = function (conf, username, isRootUser) {
 }
 exports.pushPostIntoDB = function (data, author) {
   author = author ? author : 'guest';
-  console.log(data);
   var post = new postModel(data);
   post.author = author;
   post.date = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
@@ -93,7 +100,7 @@ exports.pushPostIntoDB = function (data, author) {
   //   post.save(function (data) {console.log(data)});
   //   console.log(post);
   // })
-  post.save(function (data) {console.log(data)});
+  post.save();
 }
 exports.removePostFromDB = function (id, username, isRootUser) {
   return postModel.find().
@@ -111,9 +118,7 @@ exports.removePostFromDB = function (id, username, isRootUser) {
 }
 exports.updatePostInDB = function (id, username, isRootUser, option, change) {
   if (option == 'edit') {
-    console.log('edit');
     return postModel.find().then(function (post) {
-      console.log(id, username, post[id].author);
       if (post[id].author == username) {
         post[id].title = change.title;
         post[id].text = change.text;
@@ -121,22 +126,24 @@ exports.updatePostInDB = function (id, username, isRootUser, option, change) {
         post[id].date = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
         post[id].save();
         return Promise.resolve(true);
-      } else return Promise.reject('You are not the author of this post!');
+      } else return Promise.reject('非作者不能修改博客');
     })
   } else if (option == 'hide') {
     if (isRootUser) {
-      return postModel.find({id: id}).then(function (post) {
-        post[0].hiddenByAdmin = true;
+      return postModel.find().then(function (posts) {
+        console.log(posts[id].hiddenByAdmin);
+        posts[id].hiddenByAdmin = true;
+        posts[id].save();
         return Promise.resolve(true);
       })
-    } else return Promise.reject('You are not a root user!');
+    } else return Promise.reject('非管理员不能隐藏博客');
   }
 }
 
 exports.registUserToDB = function (user) {
   return userModel.find({username: user.username}).
     then(function (data) {
-      if (!data.length) return Promise.reject('User is already exist.');
+      if (data.length) return Promise.reject('用户已存在');
       else {
         var usr = new userModel(user);
         usr.password = bcrypt.hashSync(usr.password, salt);

@@ -374,6 +374,15 @@ input.at {
   margin-bottom: -10px !important;
   margin-left: 5px !important;
 }
+.hidden {
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  display: inline-block;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 
 /*

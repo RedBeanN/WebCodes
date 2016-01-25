@@ -10,6 +10,7 @@ blogApp.service('blogService', function() {
   this.getPostPage = function($scope, $http, config) {
     $http.put('/api/postpage', config).
       success(function(data) {
+        // console.log(data);
         $scope.pagingConfig.currentPage = data.config.currentPage;
         $scope.pagingConfig.totalItems = data.config.totalItems;
         $scope.pagingConfig.itemsPerPage = data.config.itemsPerPage;
@@ -49,12 +50,12 @@ blogApp.service('blogService', function() {
             error(function(err) {
               $scope.form.comments.waiting = false;
               $scope.form.comments.onerror = true;
-              $scope.form.comments.errmsg = 'commute error, try again';
+              $scope.form.comments.errmsg = '连接出错，请稍后重试';
             })
         } else {
           $scope.form.comments.waiting = false;
           $scope.form.comments.onerror = true;
-          $scope.form.comments.errmsg = 'text is empty!';
+          $scope.form.comments.errmsg = '评论内容不能为空！';
         }
       };
       $scope.addReply = function(pid, cid) {
@@ -96,6 +97,10 @@ blogApp.service('blogService', function() {
   this.editPost = function ($scope, $http, $location, $routeParams) {
     $http.get('/api/post/' + $routeParams.id).
       success(function (data) {
+        console.log(data.hiddenByAdmin);
+        if (data.post.hiddenByAdmin) {
+          $location.url('/');
+        }
         $scope.form = data.post;
         $scope.form.text = $scope.form.text.join('\n');
       });
