@@ -1,13 +1,13 @@
 var mongoose = require('mongoose'),
-      models = require('./models'),
-      Promise = require('bluebird'),
-      bcrypt = require('bcryptjs'),
-      salt = bcrypt.genSaltSync(10);
+    models = require('./models'),
+    Promise = require('bluebird'),
+    bcrypt = require('bcryptjs'),
+    salt = bcrypt.genSaltSync(10);
 
 var replySchema = models.replySchema,
-      commentSchema = models.commentSchema,
-      postSchema = models.postSchema,
-      userSchema = models.userSchema;
+    commentSchema = models.commentSchema,
+    postSchema = models.postSchema,
+    userSchema = models.userSchema;
 
 var db = mongoose.createConnection('localhost', 'data');
 db.on('error', console.error.bind(console, 'connection error: '));
@@ -28,9 +28,9 @@ userModel.find({username: 'administrator'}).then(function (data) {
       email: 'admin@local.host',
       root: 'administrator'
     })).save();
-    console.log('[Mongoose] Admin does not exist. Create admin account.\nYour username is [administrator], password is [blogAdmin].');
+    console.log('Admin does not exist. Create admin account.\nYour username is [administrator], password is [blogAdmin].');
   } else {
-    console.log('[Mongoose] Admin exists.');
+    console.log('Admin exists.');
   }
 });
 
@@ -100,12 +100,12 @@ exports.getPostById = function (id) {
 exports.getPostsByConfig = function (conf, username, isRootUser) {
   return postModel.find().sort({'_id': -1}).
     then(function (posts) {
-      if (!posts.length) return Promise.reject('No Post Exist');
+      if (!posts.length) return Promise.resolve([]);
       else {
         // update paging config
         conf.totalItems = posts.length;
         conf.totalPages = Math.ceil(conf.totalItems / conf.itemsPerPage);
-        if (conf.currentPage > conf.totalPages) return Promise.reject('Error Page Number');
+        if (conf.currentPage > conf.totalPages) conf.currentPage = conf.totalPages;
         // push posts
         var page = [];
         for (var i = (conf.currentPage - 1) * conf.itemsPerPage;
