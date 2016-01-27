@@ -1,10 +1,10 @@
-a#back(href='/') 返回
+a#back(href='/') &lt; 返回
 br
 div(ng-controller='mdCtrl' ng-model='form')
   h2 {{form.title}}
   div.markdown#read-post(ng-bind-html='form.text')
 p#blog-btn
-  span 删除操作是不可恢复的，您确定要继续吗？ 
+  span 删除文章会同时删除所有评论及回复，且不可恢复，您确定要继续吗？ 
   br
   button(ng-click='deletePost()') 确定
   |  - 

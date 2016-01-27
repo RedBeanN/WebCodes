@@ -1,47 +1,62 @@
+/* These scrollbar styles only works on chrome and safary */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #80cbc4;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #009688;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: #0277bd;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background-color: #01579b;
+}
+
+/* main styles */
 body {
   width: 900px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #e0e0e0;
 }
 body, input, button {
   margin-top: 0px;
-  border: 1px solid black;
+  border: 1px solid #0d47a1;
   font: 14px "Microsoft YaHei", Arial, sans-serif;
   text-align: center;
 }
 button {
   border: none;
-  border-left: 5px solid #8888ff;
-  border-right: 5px solid #8888ff;
-  border-radius: 50px;
   background-color: #66ccff;
   cursor: pointer;
   transition-duration: 0.2s;
 }
 button:hover {
-  border-left: 5px solid #66ccff;
-  border-right: 5px solid #66ccff;
   background-color: #9999ff;
   color: white;
 }
 button, input {
   outline: none;
 }
-a, label {
+a, label, button {
   display: inline-block;
   width: 90px;
   height: 24px;
-  border-radius: 5px;
-  background-color: #66ccff;
+  background-color: #29b6f6;
   color: black;
   text-align: center;
   font-size: 16px;
-  margin-right: 10px;
   text-decoration: none;
+  box-shadow: 1px 1px 2px gray;
 }
+a {margin-right: 8px;}
 a:hover, label:hover {
-  background-color: #6666ff;
+  background-color: #039be5;
   color: white;
+  box-shadow: 1px 1px 4px gray;
 }
 h3 {
   margin-top: 15px;
@@ -55,7 +70,7 @@ h3 {
   padding-bottom: 10px;
   height: 60px;
   position: fixed;
-  background-color: #6666ff;
+  background-color: #0d47a1;
   color: white;
   text-align: left;
 }
@@ -67,13 +82,13 @@ h3 {
 
 #left {
   float: left;
+  margin-left: 10px;
 }
 
 #left > div {
   width: 200px;
   margin-left: 10px;
-  border: 2px solid #66ccff;
-  border-radius: 10px;
+  border: 1px solid #0277bd;
   background-color: #fbfbfb;
   overflow: hidden;
 }
@@ -81,13 +96,19 @@ h3 {
 #right {
   float: right;
   width: 640px;
-  margin-right: 10px;
-  padding-left: 30px;
-  /*border: 1px solid yellow;*/
+  margin-right: 15px;
   text-align: left;
 }
 #right p {
   margin-top: -5px;
+}
+#search {
+  margin-left: 20px;
+}
+#search input {
+  width: 60px !important;
+  height: 15px !important;
+  margin-bottom: 0 !important;
 }
 
 #footer {
@@ -98,20 +119,19 @@ h3 {
 .regist, .login {
   width: 50%;
   border: none;
-  border-radius: 0 0 0 0;
   height: 36px;
-  background-color: #66ccff;
+  background-color: #29b6f6;
   color: black;
   font-size: 20px;
   padding-bottom: 5px;
   transition-duration: 0.3s;
 }
 .regist:hover, .login:hover {
-  background-color: #9999ff;
+  background-color: #039be5;
   border: none;
 }
-.active {
-  background-color: #6666ff;
+.user-active {
+  background-color: #0277bd;
   color: white;
 }
 
@@ -122,7 +142,7 @@ h3 {
   width: 100%;
   border: none;
   height: 35px;
-  background-color: #aaaaff;
+  background-color: #0277bd;
   color: white;
   font-size: 20px;
   padding-bottom: 5px;
@@ -138,23 +158,19 @@ h3 {
   width: 160px;
   margin-left: 20px;
   text-align: left;
+  word-break: normal;
+  word-wrap: break-word;
 }
 
 #back {
-  /*float: left;*/
-  width: 45px;
+  width: 60px;
   left: 0px;
-  border: 2px solid #66ccff;
-  background-color: #66ccff;
-  padding-left: 5px;
-  padding-right: 0;
+  background-color: #00b0ff;
   margin-right: 20px;
-  border-radius: 50% 0 0 50%;
+  margin-bottom: 10px;
+  font-weight: normal;
 }
-#back:hover {
-  background-color: #6666ff;
-  border: 2px solid #6666ff;
-}
+#back:hover { background-color: #0091ea; }
 
 #para {
   width: 500px;
@@ -162,13 +178,9 @@ h3 {
   margin-right: auto;
   text-align: left;
 }
-#para p {
-  padding-left: 0px;
-}
+#para p { padding-left: 0px; }
 
-#blog-btn {
-  margin-top: 10px !important;
-}
+#blog-btn { margin-top: 10px !important; }
 
 #blog-btn button {
   width: 120px;
@@ -176,14 +188,18 @@ h3 {
   margin-right: auto;
 }
 
+#post-footer {margin-bottom: 30px;}
+
 .posts {
   position: relative;
-  width: 570px;
-  border: 1px solid green;
-  border-radius: 5px;
+  width: 580px;
+  border: 1px solid #fafafa;
+  background-color: #fafafa;
   margin-top: 20px;
-  padding: 10px;
-  padding-top: 0px;
+  padding: 0px;
+  padding-left: 8px;
+  box-shadow: 3px 3px 7px #aaaaaa;
+  transition-duration: 5s;
 }
 
 .posts p {
@@ -192,7 +208,7 @@ h3 {
 }
 .posts div {
   position: absolute;
-  right: 20px;
+  right: 0px;
   margin-top: -30px;
 }
 
@@ -205,7 +221,7 @@ h3 {
   padding-right: 10px;
   margin-bottom: 10px;
   border: 2px solid #cccccc;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
   overflow: auto;
   transition-duration: 0.5s;
 }
@@ -220,34 +236,36 @@ h3 {
   #post-container {height: 525px; }
 }
 
-#right input:hover, #right textarea:hover {
-  border: 2px solid #aaaaff;
-}
-#right input:focus, #right textarea:focus {
-  border: 2px solid #3333ff;
-}
+#right input:hover, #right textarea:hover { border: 2px solid #aaaaff; }
+#right input:focus, #right textarea:focus { border: 2px solid #3333ff; }
 #read-post {
   width: 580px;
   height: auto;
   float: none;
   margin-left: 0;
+  box-shadow: 3px 3px 7px #aaaaaa;
 }
 #blog-btn span {
   color: red;
 }
 #checkbox {
-  margin-left: 300px;
+  margin-left: -30px;
+  background-color: inherit;
+  box-shadow: none;
+  overflow: none;
 }
+#checkbox:hover {color: black}
 #checkbox input {
   width: 12px !important;
   height: 12px;
-  margin: 0 !important;
+  margin-right: 5px !important;
 }
 #post-container {
   overflow-y: auto;
-  border: 1px solid gray;
-  padding-left: 25px;
+  background-color: #ececec;
+  padding-left: 20px;
   padding-bottom: 25px;
+  box-shadow: inset 0px 0px 20px gray;
 }
 #top-button {
   margin-bottom: 25px;
@@ -255,18 +273,23 @@ h3 {
 
 #comments {
   width: 560px;
-  /*border: 1px solid blue;*/
   text-align: left;
   margin-top: 20px;
   padding: 10px;
+}
+#comments strong {
+  margin-left: 10px;
+  font-size:18px;
+  color: #004d40;
 }
 .comment {
   border: none;
   border-left: 5px solid #66ccff;
   border-right: 5px solid #66ccff;
-  background-color: rgba(233, 244, 210, 0.5);
+  background-color: rgba(100, 255, 218, 0.5);
   padding: 10px;
   margin: 10px;
+  box-shadow: 2px 2px 4px gray;
 }
 .comment-author {
   font-size: 16px;
@@ -279,38 +302,23 @@ h3 {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
 }
-.at {
-  color: #6666ff;
-}
+.at { color: #6666ff; }
 .comment-operations {
   text-align: left;
   width: 100%;
 }
 .comment a, label {
   font-size: 14px;
-  width: 75px;
   height: 20px;
-  /*margin-right: 10px;*/
   margin-top: 0;
   text-align: center !important;
   cursor: pointer;
-  /*margin-bottom: 10px;*/
 }
-label input {
-  display: none;
-}
-.delete {
-  background-color: #ff7878;
-}
-.delete:hover {
-  background: red;
-}
-.hide {
-  background-color: #cccccc;
-}
-.hide:hover {
-  background-color: gray;
-}
+label input { display: none; }
+.delete { background-color: #e57373; }
+.delete:hover { background: #f44336; }
+.hide { background-color: #80cbc4; }
+.hide:hover { background-color: #009688; }
 .error-message {
   color: red;
   margin-top: -10px;
@@ -318,7 +326,6 @@ label input {
 
 .checkbox {
   height: 20px;
-  margin: 0;
   text-align: left;  
 }
 .checkbox input {
@@ -334,9 +341,7 @@ label input {
   margin-left: 10px;
   font-size: 14px;
 }
-#add-comment {
-  margin-left: 20px;
-}
+#add-comment { margin-left: 20px; }
 #add-comment > div > textarea {
   width: 480px;
   height: 60px;
@@ -358,11 +363,9 @@ label input {
   margin-bottom: 10px;
   margin-left: 20px;
 }
-.guest {
-  color:gray;
-}
+.guest { color:gray; }
 .post-author {
-  color: blue;
+  color: #2962ff;
   font-weight: normal;
   margin-left: 10px;
   font-size: 14px;
@@ -376,30 +379,37 @@ input.at {
 }
 .hidden {
   border: 1px solid gray;
-  border-radius: 5px;
   background-color: #f0f0f0;
-  display: inline-block;
+  width: 160px;
   padding: 2px;
   padding-left: 10px;
   padding-right: 10px;
 }
-
-
-/*
-  styles.old
-*/
-input:hover, a:hover, label:hover {
-  transition-duration: 0.2s;
+#loading-container {
+  width: 100%;
+  z-index: 1050;
+  background-color: white;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
 }
-form {
-  text-align: right;
+#loading-container img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  margin-top: 200px;
 }
+
+input:hover, a:hover, label:hover { transition-duration: 0.2s; }
+form { text-align: right; }
 input {
   text-align: left;
   width: 100px;
   height: 24px;
   border: 1px solid blue;
-  border-radius: 5px;
   margin-right: 20px;
   margin-left: 5px;
   margin-bottom: 10px;
@@ -426,33 +436,23 @@ input {
 }
 #reset, #submit {
   border: none;
-  border-radius: 0 0 0 0;
   text-align: center;
   width: 50%;
   margin: 0px;
   height: 36px;
   font-size: 20px;
-  background-color: #aaaaff;
+  background-color: #039be5;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
-#reset {
-  border-left: 1px solid white;
-}
-#reset:hover, #submit:hover {
-  background-color: #66ccff;
-}
-#reset:active, #submit:active {
-  background-color: #6666ff;
-}
+#reset:hover, #submit:hover { background-color: #0288d1; }
+#reset:active, #submit:active { background-color: #0277bd; }
 .info {
   text-align: left;
   margin-left: 40px;
 }
-.info span {
-  margin-left: 10px;
-}
+.info span { margin-left: 10px; }
 .err-input {
   opacity: 0;
   color: red;
@@ -466,3 +466,35 @@ input {
   height: 20px;
   transition-duration: 0.5s;
 }
+
+.switch-container {
+  overflow: none;
+  float: left;
+  position: absolute;
+  display: inline-block;
+  width: 35px;
+  margin-top: 10px;
+  height: 10px;
+  /*border: 1px solid black;*/
+  border-radius: 5px;
+  background-color: #40b6ac;
+  transition-duration: 0.2s;
+}
+.switch {
+  margin-left: -30px;
+  margin-top: -5px;
+  display: inline-block;
+  background-color: #90caf9;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px gray;
+  transition-duration: 0.2s;
+}
+.switch-container:hover .switch { background-color: #42a5f5; }
+.switchon { background-color: #00897b; }
+.switchon .switch {
+  margin-left: 20px;
+  background-color: #1976d2;
+}
+.checkbox-text { margin-left: 170px; }

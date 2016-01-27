@@ -5,9 +5,11 @@
 ul {
   padding: 0;
   display: inline-block;
+  margin-top: 5px;
 }
 li {
   list-style: none;
+  background-color: #fafafa;
 }
 .paging li {
   display: inline-block;

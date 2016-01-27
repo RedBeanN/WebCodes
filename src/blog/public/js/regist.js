@@ -20,9 +20,15 @@ function check(it) {
       var pwd = $('.inputs')[1].children[1].value;
       if (!validator.isRepeatValid(it.value, pwd)) {
         changeErr(it.id, 1, validator.getErrorMessage(it.id));
+        return false;
       } else changeErr(it.id, 0);
     } else if (!validator.isFieldValid(it.id, it.value)) {
       changeErr(it.id, 1, validator.getErrorMessage(it.id));
+      return false;
     } else changeErr(it.id, 0);
-  } else changeErr(it.id, 1, validator.getErrorMessage(it.id));
+  } else {
+    changeErr(it.id, 1, validator.getErrorMessage(it.id));
+    return false;
+  }
+  return true;
 }

@@ -7,7 +7,7 @@ div#user-bar
       p#pagename(ng-show='config.items.isLogin') {{config.pagename}}
       div.inputs(ng-repeat='line in config.items.lines')
         span {{line.title}}
-        input(ng-model='line.value' type='{{line.type}}' ng-focus='removeErr()' ng-blur='checkValidation()')
+        input(ng-model='line.value' type='{{line.type}}' ng-focus='config.removeErr(line)' ng-blur='config.checkValidation(line)')
         p.err-input(id='{{line.id}}')
         br
       div#data

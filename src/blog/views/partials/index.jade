@@ -1,12 +1,16 @@
 p 现在有{{pagingConfig.totalItems || 0}}篇文章  
   a(href='addPost') 添加新文章
-  span#checkbox
+  span.checkbox-text 文章预览
+  label#checkbox
+    span.switch-container(ng-class='{switchon: !previewed}')
+      span.switch
     input#checkbox(type='checkbox' ng-model='previewed')
-    | 关闭文章预览
+  span#search 搜索 
+    input#search(ng-model='myfilter')
 
 div
   div#post-container
-    div.posts(ng-repeat='post in posts')
+    div.posts(ng-repeat='post in posts | filter : {title: myfilter}')
       h3 {{post.title}}
         span.post-author {{post.author}}
         span.date(ng-hide='previewed') {{post.date}}
@@ -14,7 +18,8 @@ div
       div
         a(href='readPost/{{post.id}}') 查看全文
         a(href='editPost/{{post.id}}' ng-show='post.isAuthor && !post.hiddenByAdmin') 编辑文章
-        a.delete(href='deletePost/{{post.id}}' ng-show='post.isAuthor || post.root') 删除文章
+        a.delete(href='deletePost/{{post.id}}' ng-show='post.isAuthor') 删除文章
         a.hide(href='hidePost/{{post.id}}' ng-show='post.root') {{post.hiddenByAdmin? '取消隐藏':'隐藏文章'}}
+    div#post-footer
 
   am-paging(config="pagingConfig")

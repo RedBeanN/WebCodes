@@ -1,4 +1,4 @@
-a#back(href='/') 返回
+a#back(href='/') &lt; 返回
 br
 
 div(ng-controller='mdCtrl' ng-model='form')
@@ -13,23 +13,25 @@ div(ng-controller='mdCtrl' ng-model='form')
       div.comment(ng-repeat='comment in form.comments')
         span.comment-author(ng-class='{guest: comment.author == "guest"}') {{comment.author}}
           span.date {{comment.date}}
-        p.comment-text
+        p.comment-text(ng-class='{hidden: comment.hiddenByAdmin == true}')
           span.at(ng-show='comment.at') {{'@'+comment.at}} 
           | {{comment.text}}
 
         div.comment(ng-repeat='reply in comment.replys')
           span.comment-author(ng-class='{guest: reply.author == "guest"}') {{reply.author}}
             span.date {{reply.date}}
-          p.comment-text
-            span.at(ng-show='reply.at') {{'@'+reply.at}} 
+          p.comment-text(ng-class='{hidden: reply.hiddenByAdmin == true}')
+            span.at(ng-show='reply.at && !reply.hiddenByAdmin') {{'@'+reply.at}} 
             | {{reply.text}}
           div.comment-operations
-            a.delete(ng-click='deleteReply(comment.id, reply.id)' ng-show='reply.root') x删除回复
+            a.delete(ng-click='deleteReply(comment.id, reply.id)' ng-show='reply.isAuthor') x删除回复
+            a.hide(ng-click='hideReply(comment.id, reply.id)' ng-show='form.root') *隐藏回复
         div.comment-operations
           label.checkbox
             input(type='checkbox' ng-model='comment.showReply')
             | {{comment.showReply?'-':'+'}}回复评论
-          a.delete(ng-click='deleteComment(comment.id)' ng-show='comment.root') x删除评论
+          a.delete(ng-click='deleteComment(comment.id)' ng-show='comment.isAuthor') x删除评论
+          a.hide(ng-click='hideComment(comment.id)' ng-show='form.root') *隐藏评论
         div(ng-show='comment.showReply')
           p @
             input.at(ng-model='comment.replyAt')
@@ -44,6 +46,5 @@ div(ng-controller='mdCtrl' ng-model='form')
         div(ng-show='form.showAddComment')
           textarea(ng-model='form.comments.commentToAdd') 
           br
-          button(ng-click='addComment()' ng-hide='form.comments.waiting') submit
-          img#waiting(src='img/waiting.jpg' ng-show='form.comments.waiting')
+          button(ng-click='addComment()' ng-hide='form.comments.waiting') 评论
           p.error-message(ng-show='form.comments.onerror') {{form.comments.errmsg}}

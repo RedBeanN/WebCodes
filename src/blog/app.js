@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // Configuration
 
-app.configure(function(){
+app.configure(function (){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.set('view options', {
@@ -31,11 +31,11 @@ app.configure(function(){
 });
 
 
-app.configure('development', function(){
+app.configure('development', function (){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-app.configure('production', function(){
+app.configure('production', function (){
   app.use(express.errorHandler());
 });
 
@@ -60,10 +60,13 @@ app.get('/api/logout', api.logout);
 app.get('/api/login', api.getLogin);
 app.get('/api/index', api.getIndex);
 app.get('/api/regist', api.getRegist);
+app.get('/api/hide-post/:id', api.hidePost);
 app.put('/api/postpage', api.postPage);
 app.put('/api/add-reply', api.addReply);
+app.put('/api/hide-reply', api.hideReply);
 app.put('/api/delete-reply', api.deleteReply);
 app.put('/api/add-comment/:id', api.addComment);
+app.put('/api/hide-comment', api.hideComment);
 app.put('/api/delete-comment', api.deleteComment);
 // END ADD
 
@@ -72,6 +75,6 @@ app.get('*', routes.index);
 
 // Start server
 
-app.listen(3000, function(){
+app.listen(3000, function (){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

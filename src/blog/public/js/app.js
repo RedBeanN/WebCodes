@@ -1,5 +1,4 @@
-var userApp = angular.module('userApp', ['ngRoute']);
-var blogApp = angular.module('blogApp', ['ngRoute', 'ngSanitize', 'am.paging', 'userApp']);
+var blogApp = angular.module('blogApp', ['ngRoute', 'ngSanitize', 'am.paging']);
 
 // markdown editor setting
 marked.setOptions({
@@ -16,7 +15,7 @@ marked.setOptions({
   }
 });
 
-blogApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+blogApp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
       templateUrl: 'partials/index',
@@ -38,15 +37,19 @@ blogApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
       templateUrl: 'partials/deletePost',
       controller: DeletePostCtrl
     }).
+    when('/hidePost/:id', {
+      templateUrl: 'partials/hidePost',
+      controller: HidePostCtrl
+    }).
     otherwise({
       redirectTo: '/'
     });
   $locationProvider.html5Mode(true);
 }]);
 
-blogApp.controller('mdCtrl', ['$scope', function($scope) {
+blogApp.controller('mdCtrl', ['$scope', function ($scope) {
   if(!$scope.form.text) $scope.form.text = '';
-}]).directive('tab', function() {
+}]).directive('tab', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -62,28 +65,14 @@ blogApp.controller('mdCtrl', ['$scope', function($scope) {
           element.triggerHandler('change');
         }
       });
-      scope.$watch('form.text', function(current) {
+      scope.$watch('form.text', function (current) {
         if (typeof(current) != 'object') scope.outputText = marked(current);
       });
     }
   };
-});
-
-/*userApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-  $routeProvider.
-    when('/', {
-      templateUrl: 'user/user',
-      controller: UserIndexController
-    }).
-    otherwise({
-      redirectTo: '/'
-    });
-  $locationProvider.html5Mode(true);
-}]);*/
-
-userApp.directive('amUser', [function() {
+}).directive('amUser', [function () {
     return {
-    restrict: 'EA',
+    restrict: 'E',
     templateUrl: 'user/user',
     replace: true,
     scope: {

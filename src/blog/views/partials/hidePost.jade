@@ -1,0 +1,14 @@
+a#back(href='/') &lt; 返回
+br
+div(ng-controller='mdCtrl' ng-model='form')
+  h2 {{form.title}}
+  div.markdown#read-post(ng-bind-html='form.text')
+p#blog-btn
+  span(ng-hide='form.hiddenByAdmin')
+    | 隐藏后所有用户都无法看到内容（评论不会被隐藏），您确定要继续吗？
+  span(ng-show='form.hiddenByAdmin')
+    | 显示后所有用户都能看到内容，您确定要继续吗？
+  br
+  button(ng-click='hidePost()') 确定
+  |  - 
+  button(ng-click='home()') 取消

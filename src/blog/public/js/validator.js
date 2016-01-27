@@ -27,7 +27,7 @@ var validator = {
   }, 
 
   isUsernameValid: function (username){
-    return this.form.username.status = /^[a-zA-Z][a-zA-Z0-9_]{5,11}$/.test(username);
+    return this.form.username.status = /^[a-zA-Z][a-zA-Z0-9_]{5,17}$/.test(username);
   },
 
   isPasswordValid: function (password){
@@ -50,21 +50,21 @@ var validator = {
     return this.form.email.status = /^[a-zA-Z_\-]+@([a-zA-Z_\-]+\.)+[a-zA-Z]{2,4}$/.test(email);
   },
 
-  isFieldValid: function(fieldname, value, value2){
+  isFieldValid: function (fieldname, value, value2){
     var CapFiledname = fieldname[0].toUpperCase() + fieldname.slice(1, fieldname.length);
     if (fieldname == 'repeat') return this['isRepeatValid'](value, value2);
     return this["is" + CapFiledname + 'Valid'](value);
   },
 
-  isFormValid: function(){
+  isFormValid: function (){
     return this.form.username.status && this.form.password.status && this.form.number.status && this.form.phone.status && this.form.email.status;
   },
 
-  getErrorMessage: function(fieldname){
+  getErrorMessage: function (fieldname){
     return this.form[fieldname].errorMessage;
   },
 
-  isAttrValueUnique: function(registry, user, attr){
+  isAttrValueUnique: function (registry, user, attr){
     if (attr == 'password' || attr == 'repeat') return true;
     for (var key in registry) {
       if (registry[key][attr] == user[attr]) return false;
@@ -72,7 +72,7 @@ var validator = {
     return true;
   },
 
-  getID: function(type) {
+  getID: function (type) {
     var id;
     switch(type) {
       case '用户名' : id = 'username'; break;

@@ -1,5 +1,5 @@
 div.page-list
-  ul.paging(ng-show='config.totalPages > 1')
+  ul.paging(ng-show='config.totalItems > 5')
     li(ng-class='{disabled: config.currentPage == 1}' ng-click='firstPage()')
       span &lsaquo;&lsaquo;
     li(ng-class='{disabled: config.currentPage == 1}' ng-click='prevPage()')

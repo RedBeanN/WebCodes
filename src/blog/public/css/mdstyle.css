@@ -10,10 +10,10 @@
   padding:5px;
   margin:auto;
   max-width:42em;
-  background:#fefefe;
+  background-color:#fafafa;
   width: 320px;
-  border: 2px solid #dddddd;
-  border-radius: 5px;
+  /*border: 2px solid #dddddd;*/
+  /*border-radius: 5px;*/
   float: right;
   word-wrap: break-word;
   white-space: pre-wrap;
