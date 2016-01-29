@@ -1,0 +1,12 @@
+nav(navbar)
+div#login-container(ng-hide='isLogin')
+  h2 login
+  form
+    p username
+      input(type="text" ng-model='form.username')
+    p password
+      input(type="password" ng-model='form.password')
+    label
+      input(type="checkbox" ng-model='form.remember')
+      | remember me
+    button(ng-click='login()') Log In

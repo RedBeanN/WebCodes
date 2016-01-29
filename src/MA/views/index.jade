@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    base(href='/')
+    title My Achievement
+    link(rel='stylesheet', href='/min/style.min.css')
+    //- script(src='/javascripts/lib/angular/angular.min.js')
+    //- script(src='/javascripts/lib/angular/angular-route.min.js')
+    //- script(src='/javascripts/lib/jquery.min.js')
+    script(src='/min/app.min.js')
+  body(ng-app="MA")
+    div#viewer
+      ng-view
+

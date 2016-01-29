@@ -1,0 +1,81 @@
+nav {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #66ccff;
+  margin: 0px;
+  /*padding: 10px;*/
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+nav > a {
+  display: inline-block;
+  margin: 14px;
+  color: white;
+  font-size: 22px;
+  transition-duration: .2s;
+}
+nav > a:hover { color: blue; }
+#nav-user {
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  cursor: default;
+  padding-top: 20px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  transition-duration: 0.5s;
+}
+#nav-user > p, #nav-user > div {
+  position: absolute;
+  right: 30px;
+  display: inline-block;
+  /*background-color: #aaa;*/
+}
+#nav-user > p {
+  right: 90px;
+  width: 220px;
+  margin: 0px;
+}
+#nav-user > div {z-index: 1020;}
+#nav-user span {
+  display: inline-block;
+  background-color: #66ccff;
+  margin-right: 20px;
+}
+#nav-user > div:hover {color: black;}
+ul {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+#nav-user > div ul li {
+  font-size: 14px;
+  margin-left: 0;
+  margin-top: -100px;
+  width: 70px;
+  height: 40px;
+  /*padding: 8px;*/
+  text-align: center;
+  background-color: white;
+  list-style-type: none;
+  border: 1px solid blue;
+  overflow: hidden;
+  transition-duration: 0.5s;
+}
+#nav-op {cursor: pointer;}
+#nav-op:hover li {
+  margin-top: 0px;
+}
+#nav-user a {
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+  padding-top: 10px;
+  width: 100%;
+  height: 100%;
+}
+#nav-user a:hover {
+  background-color: #ccc;
+}

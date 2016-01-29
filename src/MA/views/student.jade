@@ -1,0 +1,6 @@
+nav(navbar)
+div STUDENT
+  p {{user.name}}
+  div(ng-repeat='homework in data') {{homework.title}} 
+    span {{homework.status}} {{homework.hwid}}
+    a(ng-repeat='option in homework.options' href='{{option.url}}') {{option.title}}

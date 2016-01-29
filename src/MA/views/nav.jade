@@ -1,0 +1,12 @@
+nav
+  a(href='/') My Achievement
+  div#nav-user(ng-show='user')
+    div#nav-op {{user.username || 'guest'}}
+      ul
+        li
+          a(href='changePassword/') change
+        li
+          a(ng-click='logout()') logout
+    p
+      span group {{user.group || 'null'}}
+      span {{user.sid || 'null'}}
