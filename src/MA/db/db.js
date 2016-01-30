@@ -21,35 +21,13 @@ var homeworks = [{
   title: 'Homework1',
   status: 'end',
   deadline: '2016/1/28 23:55',
-  options: [
-    {
-      url: 'homeworks/detail/0',
-      title: ' Detail '
-    },{
-      url: 'homeworks/download/0',
-      title: ' My Code '
-    }, {
-      url: 'homeworks/review/0',
-      title: ' Review '
-    }
-  ]
+  url: 'homeworks/detail/0'
 }, {
   hwid: 1,
   title: 'Homework2',
   status: 'present',
   deadline: '2016/2/22 23:55',
-  options: [
-    {
-      url: 'homeworks/detail/1',
-      title: ' Detail '
-    },{
-      url: 'homeworks/submit/1',
-      title: ' Submit '
-    }, {
-      url: 'homeworks/review/1',
-      title: ' Review '
-    }
-  ]
+  url: 'homeworks/detail/1'
 }];
 var submissions = [{
   uid: 0,
