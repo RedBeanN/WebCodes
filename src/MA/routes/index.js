@@ -17,7 +17,7 @@ router.get('/login', function (req, res) {
     });
 });
 router.get('/logout', function (req, res) {
-  res.cookie('username', '', {maxAge: -1});
+  res.cookie('uid', '', {maxAge: -1});
   res.redirect('/');
 })
 router.get('/nav', function (req, res) {
@@ -26,6 +26,9 @@ router.get('/nav', function (req, res) {
 router.get('/partials/student', function (req, res) {
   res.render('student');
 });
+router.get('changePassword', function (req, res) {
+  res.render('changePassword');
+})
 router.get('*',function (req, res) {res.render('index');})
 
 module.exports = router;

@@ -14,14 +14,19 @@ a {
 }
 html, body {height: 95%}
 #viewer {
-  width: 90%;
-  height: 95%;
+  width: 95%;
+  height: 99%;
   margin: auto;
-  margin-top: 5%;
-  box-shadow: 7px 7px 10px gray;
+  margin-top: 3%;
+  /*padding: 30px;*/
+  box-shadow: inset 0px 0px 20px gray;
   overflow: auto;
 }
-
+nav {
+  box-shadow: 0px 0px 20px gray;
+  /*position: relative;*/
+  /*z-index: -1;*/
+}
 #login-container {
   margin-top: 50px;
   width: 300px;
@@ -48,4 +53,73 @@ html, body {height: 95%}
 }
 #login-container label {
   margin-right: 20px;
+}
+.homework-container {
+  padding: 20px;
+}
+#notifications {
+  border: 1px solid gray;
+  background-color: #ccc;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.homework {
+  float: left;
+  position: relative;
+  /*margin-top: 80px;*/
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 22%;
+  height: 280px;
+  overflow: hidden;
+  box-shadow: 5px 5px 7px #aaa;
+}
+.homework > p {
+  background-color: #6cf;
+  padding: 5px;
+  color: white;
+  height: 20px;
+}
+.homework > p > span {
+  float: right;
+  margin-right: 10px;
+  background-color: #dd0;
+  color: black;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-shadow: 1px 1px 3px black;
+  cursor: pointer;
+}
+.homework-footer {
+  background-color: #99f;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.homework-footer a, .homework-footer button {
+  color: white;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.homework-footer a:hover,
+.homework-footer button:hover {
+  color: blue;
+}
+.homework-footer-left {
+  display: inline-block;
+  float: left;
+  margin: 5px;
+}
+.homework-footer-right {
+  display: inline-block;
+  float: right;
+  margin: 5px;
+}
+.homework-footer-right button {
+  border: none;
+  height: auto;
+  background-color: inherit;
+  cursor: pointer;
 }

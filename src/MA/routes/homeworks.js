@@ -33,7 +33,7 @@ router.get('/review/:id', function (req, res) {
     })
 })
 router.get('/download/:id', function (req, res) {
-  db.getHomeworkPath(req.params.id).
+  db.getSubmissionPath(req.params.id).
     then(function (path) {
       res.sendFile(path);
     }, function (err) {
@@ -47,20 +47,21 @@ router.post('/upload/:id', function (req, res) {
     then(function (user) {
       db.getHomework(id).
         then(function (hw) {
-          var filepath = '../files/' + user.uid + '/' + hw.hwid;
+          var filepath = '../submissions/' + user.uid + '/' + hw.hwid;
           var filename;
           var form = new formidable.IncommingForm();
           setForm(form, filepath);
-          form.on('fileBegin', function (name, file) {
-            file.path = form.uploadDir + '/' + file.name;
-            filename = file.name;
-          });
+          form
+            .on('fileBegin', function (name, file) {
+              file.path = form.uploadDir + '/' + file.name;
+              filename = file.name;
+            })
+            .on('end', function () {
+              db.saveSubmissionPath(user.uid, hw.hwid, filepath, filename);
+              res.send(true);
+            })
+            .on('error', function (err) {res.status(500).send(err);});
           form.parse(req);
-          form.on('end', function () {
-            db.saveHomeworkPath(user.uid, hw.hwid, filepath, filename);
-            res.send(true);
-          });
-          form.on('error', function (err) {res.status(500).send(err);});
         }, function (err) {
           res.status(500).send(err);
         });
@@ -72,7 +73,7 @@ router.post('/upload/:id', function (req, res) {
 function setForm (form, filepath) {
   form.encoding = 'utf-8';
   form.uploadDir = filepath;
-  form.keepExtensions = false;
+  form.keepExtensions = true;
   form.maxFieldSize = '50 * 1024 * 1024';
   form.hash = false;
 }

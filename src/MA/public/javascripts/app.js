@@ -13,6 +13,10 @@ MA.config(['$routeProvider', '$locationProvider', function ($routeProvider, $loc
       templateUrl: '/partials/student',
       controller: StudentCtrl
     }).
+    when('/changePassword', {
+      templateUrl: 'changePassword',
+      controller: PswCtrl
+    }).
     // when('/homwork/:id', {
     //   templateUrl: 'partials/homework',
     //   controller: HomeworkCtrl

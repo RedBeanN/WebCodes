@@ -1,6 +1,15 @@
 nav(navbar)
-div STUDENT
-  p {{user.name}}
-  div(ng-repeat='homework in data') {{homework.title}} 
-    span {{homework.status}} {{homework.hwid}}
-    a(ng-repeat='option in homework.options' href='{{option.url}}') {{option.title}}
+div.homework-container
+  div#notifications(ng-show='!hasRead')
+    p(ng-repeat='notification in notifications') {{notification}}
+    button(ng-click='read()' ng-show='!hasRead') Hide
+  div.homework(ng-repeat='homework in data')
+    p {{homework.title}} 
+      span {{homework.status}} {{homework.hwid}}
+    div.homework-footer
+      div.homework-footer-left
+        a(href='{{homework.url}}') Detail
+      div.homework-footer-right
+        a(href='/review/{{homework._id}}') Review
+        a(ng-if='homework.status == "end"' href='/download/{{homework._id}}') Download
+        button(ng-if='homework.status != "end"' ng-click='submit(homework.id)') Submit

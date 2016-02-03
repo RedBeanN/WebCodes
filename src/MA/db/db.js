@@ -5,8 +5,12 @@ var users = [{
   userRoot: 'student',
   password: 'hongshn',
   sid: 14359047,
+  notifications: [
+    'New homework published',
+    'New Score published'
+  ],
   group: 23,
-  uid: 0
+  _id: 0
 },{
   username: 'aTA',
   name: 'xxx',
@@ -14,60 +18,70 @@ var users = [{
   password: 'tapassword',
   sid: 10000000,
   group: 0,
-  uid: 1
+  _id: 1
 }];
 var homeworks = [{
-  hwid: 0,
   title: 'Homework1',
   status: 'end',
   deadline: '2016/1/28 23:55',
-  url: 'homeworks/detail/0'
+  url: 'homeworks/detail/0',
+  _id: 0
 }, {
-  hwid: 1,
   title: 'Homework2',
   status: 'present',
   deadline: '2016/2/22 23:55',
-  url: 'homeworks/detail/1'
+  url: 'homeworks/detail/1',
+  _id: 1
 }];
 var submissions = [{
   uid: 0,
   hwid: 0,
-  reviewsid: 0,
-  submissionId: 0,
+  count: 0,
   filePath: '/files/0/0/sub.rar',
   imagePath: '/files/0/0/img.jpg',
-  githubPath: 'github.com'
+  githubPath: 'github.com',
+  _id: 0
 }];
 var reviews = [{
-  uid: 0,
-  hwid: 0,
-  submissionId: 0,
-  reviewsid: 0,
-  isReviewEnded: false,
-  targetSubmissionsId: [0, 1, 2, 3, 4],
-  comments: [{
-    author: 'TA',
-    text: 'good',
-    score: 90
-  }, {
-    author: 'student',
-    text: 'good!',
-    score: 89
-  }]
-}]
+  submitId: 0,
+  author: 'Student',
+  text: '666',
+  score: 90,
+  _id: 0
+}, {
+  submitId: 0,
+  author: 'TA',
+  text: 'nice',
+  _id: 1
+}];
 
 exports.getUser = function (userid) {
   for (var key in users) {
-    if (users[key].userid == userid) return Promise.resolve(users[key]);
+    if (users[key]._id == userid) return Promise.resolve(users[key]);
   }
   return Promise.reject();
-}
+};
+exports.getUserByUsername = function (username) {
+  for (var key in users) {
+    if (users[key].username == username) return Promise.resolve(users[key]);
+  }
+  return Promise.reject('Cannot Find the User');
+};
 exports.getHomeworks = function () {
   return Promise.resolve(homeworks);
-}
+};
 exports.getHomework = function (id) {
   for (var key in homeworks) {
     if (homeworks[key].id == id) return Promise.resolve(homeworks[key]);
   }
   return Promise.reject({message: 'No such homework.'});
-}
+};
+exports.userReadNotifications = function (uid) {
+  for (var key in users) {
+    if (users[key]._id == uid) {
+      users[key].notifications = [];
+      return Promise.resolve('Marked succeeded.');
+    }
+  }
+  return Promise.reject('Cannot Find the User');
+};
