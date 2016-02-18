@@ -1,8 +1,9 @@
 nav(navbar)
+div.cover
 div.homework-container
-  div#notifications(ng-show='!hasRead')
+  div#notifications(ng-if='!hasRead')
     p(ng-repeat='notification in notifications') {{notification}}
-    button(ng-click='read()' ng-show='!hasRead') Hide
+    button(ng-click='read()' ng-if='!hasRead') Hide
   div.homework(ng-repeat='homework in data')
     p {{homework.title}} 
       span {{homework.status}} {{homework.hwid}}
@@ -11,5 +12,12 @@ div.homework-container
         a(href='{{homework.url}}') Detail
       div.homework-footer-right
         a(href='/review/{{homework._id}}') Review
-        a(ng-if='homework.status == "end"' href='/download/{{homework._id}}') Download
-        button(ng-if='homework.status != "end"' ng-click='submit(homework.id)') Submit
+        a(ng-if='homework.status == "end"' href='/homeworks/download/{{homework._id}}') Download
+        button(ng-if='homework.status != "end"' ng-click='showCover(homework._id)') Submit
+    div.cover(onclick='hideCover(event)')
+      form(onclick='dontHide(event)')
+        p description
+          input(type='text' ng-model='submission.description')
+        p github address
+          input(type='text' ng-model='submission.github')
+        button(ng-click='submit(hwid)') SUBMIT

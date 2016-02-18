@@ -1,6 +1,6 @@
 function IndexCtrl ($scope, $http, $location) {
   $scope.form = {};
-  $http.get('users/detail').
+  $http.get('user/detail').
     success(function (data) {
       $location.url('/' + data.targetUrl);
     });
@@ -31,6 +31,7 @@ function UserCtrl ($scope, $http) {
 }
 
 function StudentCtrl ($scope, $http, $location, $timeout, $templateCache) {
+  $scope.submission = {};
   $http.get('student/data').
     success(function (data) {
       if (data.targetUrl) $location.url('/');
@@ -55,7 +56,6 @@ function StudentCtrl ($scope, $http, $location, $timeout, $templateCache) {
       });
   };
   $scope.read = function () {
-    // console.log($scope);
     $scope.hasRead = true;
     $http.get('/user/read-notifications').
       success(function (data) {
@@ -65,6 +65,20 @@ function StudentCtrl ($scope, $http, $location, $timeout, $templateCache) {
         alert(err);
       });
   };
+  $scope.showCover = function (id) {
+    $scope.hwid = id;
+    $('.cover').fadeIn(500);
+  };
+  $scope.submit = function (id) {
+    if (!$scope.submission.description &&
+        !$scope.submission.github) {
+      alert('Err!');
+    } else {
+      console.log($scope.submission.description,
+        $scope.submission.github);
+      $('.cover').fadeOut(500);
+    }
+  }
 }
 
 function PswCtrl ($scope, $http, $location) {

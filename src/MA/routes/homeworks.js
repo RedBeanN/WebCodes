@@ -69,6 +69,13 @@ router.post('/upload/:id', function (req, res) {
       res.status(500).send(err);
     });
 })
+router.put('/submission/', function (req, res) {
+  var id = req.params.id;
+  // description githubUrl
+  console.log(id);
+  console.log(req.body);
+  res.end();
+})
 
 function setForm (form, filepath) {
   form.encoding = 'utf-8';

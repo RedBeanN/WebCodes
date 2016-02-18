@@ -69,6 +69,5 @@ gulp.task('reload',browserSync.reload);
 gulp.task('default',['clientJS', 'css', 'sync'] , function () {
   gulp.watch('./public/javascripts/*.js',['clientJS']);
   gulp.watch('./public/stylesheets/*.css',['css', 'reload']);
-  // gulp.watch('./views/*.jade', ['css', 'reload']);
   gulp.watch('./public/javascripts/lib/*.js',['libJS']);
 });

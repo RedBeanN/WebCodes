@@ -39,6 +39,6 @@ router.get('/read-notifications', function (req, res) {
     }, function (err) {
       res.status(500).json(err);
     })
-})
+});
 
 module.exports = router;

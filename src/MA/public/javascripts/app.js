@@ -27,3 +27,9 @@ MA.config(['$routeProvider', '$locationProvider', function ($routeProvider, $loc
   $locationProvider.html5Mode(true);
 }]);
 
+function hideCover(event) {
+  $('.cover').fadeOut(500);
+}
+function dontHide(event) {
+  event.stopPropagation();
+}
